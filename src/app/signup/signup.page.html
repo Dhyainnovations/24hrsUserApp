@@ -72,14 +72,15 @@
         </ion-item>
       </div>
 
-      <div @slidelefttitle class="row">
+      <div @slidelefttitle  class="row">
 
-        <div @slidelefttitle class="col-1 tearmsAndCondition" style="margin-left: 14px;">
-          <ion-checkbox (ionChange)="checkboxClick($event)" color="success"></ion-checkbox>
+        <div class="col-1 tearmsAndCondition" style="margin-left: 14px;">
+          <ion-checkbox (ionChange)="checkboxClick($event)" color="success" [checked]="checked" [routerLink]="['/terms-and-condition']" [queryParams]="{ checkbox: true}"></ion-checkbox>
         </div>
-        <div @slidelefttitle class="col-8">
-          <p *ngIf="acceptCondtion" style="color:red;font-size: 10px;"><b>Please select</b> </p>
-          <p class="tearmsAndCondition" (click)="termsAndCondition()" >By creating an account, you agree to our
+        <div class="col-8">
+          <p *ngIf="acceptCondtion" style="color:red;font-size: 10px;padding-top: 8px;"><b>First, Agree To Terms &
+              Conditions</b> </p>
+          <p class="tearmsAndCondition" (click)="termsAndCondition()">By creating an account, you agree to our
             <b> Terms & Conditions</b>
           </p>
         </div>

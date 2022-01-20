@@ -8,36 +8,21 @@
                 <ion-icon (click)="dismiss()" style="margin:15px;cursor:pointer;color:#FF6000" name="close"></ion-icon>
             </div> -->
             <div class="col-4">
-               <div>
-                <ion-label>Spam Msg</ion-label>
-               </div>
-                <div>
-                    <ion-checkbox color="success"></ion-checkbox>
-                </div>
+                <input type="checkbox" value="Spam" name="Spam"> Spam 
             </div>
             <div class="col-4">
-                <div>
-                    <ion-label>Offer denied</ion-label>
-                </div>
-                <div>
-                    <ion-checkbox color="success"></ion-checkbox>
-                </div>
+                <input type="checkbox" value="store NA" name="store NA"> store NA
             </div>
             <div class="col-4">
-                <div>
-                    <ion-label>store N/A</ion-label>
-                </div>
-                <div>
-                    <ion-checkbox color="success"></ion-checkbox>
-                </div>
+                <input type="checkbox" value="Offer Denaid" name="Offer Denaid" > Offer Denaid
             </div>
             <div class="col-12">
                 <p>Others:</p>
             </div>
             <div class="col-12 ion-text-center">
-                
-                <input type="text">
-                <button class="btn btn-sm submit-btn">Submit</button>
+
+                <input [(ngModel)]="other" type="text">
+                <button (click)="reportSeller()" class="btn btn-sm submit-btn">Submit</button>
             </div>
         </div>
     </div>

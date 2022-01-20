@@ -15,7 +15,8 @@ export class SelectcategoriesPage implements OnInit {
     private toastCtrl: ToastController, route: ActivatedRoute) {
       route.params.subscribe(val => {
         this.getCategory()
-        console.log(this.selectedCategoryList);
+        this.selectedCategories()
+        console.log(this.alredySelectedCategoryList);
       });
      }
 
@@ -27,6 +28,7 @@ export class SelectcategoriesPage implements OnInit {
 
   getCategoryList:any = [];
   selectedCategoryList:any = []
+  alredySelectedCategoryList:any =[]
 
   buttonColor: string = '#000'; //Default Color
   addEvent(){
@@ -63,13 +65,23 @@ export class SelectcategoriesPage implements OnInit {
       console.log(error);
     });
 
-    this.router.navigate(['/homepage'])
+    this.router.navigate(['/myprofile'])
   }
 
   getCategory() {
     console.log(this.selectedCategoryList);
     this.http.get('/list_category',).subscribe((response: any) => {
       this.getCategoryList = response.records
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+  selectedCategories(){
+    this.http.get('/store_category',).subscribe((response: any) => {
+      console.log(response);
+      
+      this.alredySelectedCategoryList = response.records
     }, (error: any) => {
       console.log(error);
     });

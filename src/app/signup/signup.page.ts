@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 import Swal from 'sweetalert2';
 import { ToastController } from '@ionic/angular';
 import validator from 'validator';
@@ -42,9 +44,16 @@ import {
 export class SignupPage implements OnInit {
 
   constructor(private router: Router, private http: HttpService,
-    private toastCtrl: ToastController, public popoverController: PopoverController) {
+    private toastCtrl: ToastController, public popoverController: PopoverController,  private route: ActivatedRoute) {
     this.invalidAlert = false;
     this.acceptCondtion = false;
+
+
+    this.route.queryParams.subscribe(queryParams => {
+      this.checked= queryParams['checkbox'];
+
+  
+   });
   }
 
 
@@ -52,6 +61,7 @@ export class SignupPage implements OnInit {
 
   }
 
+  checked:any = false
 
   emailid: any = '';
   sellername: any = '';

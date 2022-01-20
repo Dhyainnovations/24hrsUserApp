@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-terms-and-condition',
@@ -7,14 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./terms-and-condition.page.scss'],
 })
 export class TermsAndConditionPage implements OnInit {
-
-  constructor(private router: Router,) { }
+  @ViewChild('scroller1') scroller: ElementRef;
+  constructor(private router: Router,route: ActivatedRoute) { 
+   }
 
   ngOnInit() {
+      
   }
-
   acceptConditions(){
-    this.router.navigate(['/signuppage'])
+    this.router.navigate(['/signuppage'],{queryParams:{checkbox:true}})
+    
   }
 
   backToprivious(){

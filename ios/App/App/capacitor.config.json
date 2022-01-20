@@ -1,6 +1,6 @@
 {
 	"appId": "com.hrsuser.app",
-	"appName": "userapp",
+	"appName": "User App",
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"cordova": {

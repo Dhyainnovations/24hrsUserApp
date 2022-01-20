@@ -9,6 +9,8 @@ import {
   animate,
   transition
 } from '@angular/animations'; 
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-support',
@@ -78,11 +80,43 @@ export class SupportPage implements OnInit {
     this.http.post('/user_description', Data).subscribe((response: any) => {
       if (response.success == "true") {
         this.problemDescription = '';
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Message Send Successfully'
+        })
       } else {
 
       }
     }, (error: any) => {
       console.log(error);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Something Went Wrong'
+      })
     }
     );
 

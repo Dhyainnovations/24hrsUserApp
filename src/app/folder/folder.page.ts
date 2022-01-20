@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../shared/http.service';
 import { Router } from '@angular/router';
@@ -36,46 +37,170 @@ import { trigger, style, state, animate, transition } from '@angular/animations'
 
 })
 
-export class FolderPage implements OnInit {
+export class FolderPage implements OnInit, OnDestroy {
   public folder: string;
 
   constructor(private theme: ThemeService, private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController) {
     route.params.subscribe(val => {
       this.getSelectCategory()
-      this.ProductList()
+      this.offerList()
     });
   }
 
   ngOnInit() {
+    this.start()
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+  }
+  ngOnDestroy() { this.clearTimer(); }
+
+  intervalId = 0;
+  message = '';
+  seconds = 11;
+  hour = 1;
+
+  clearTimer() { clearInterval(this.intervalId); }
+  start() { this.countDown(); }
+  stop() {
+    this.clearTimer();
+    this.message = `$ ${this.hour} {this.seconds} `;
+  }
+
+  private countDown() {
+    this.clearTimer();
+    this.intervalId = window.setInterval(() => {
+      this.seconds -= 1;
+      if (this.seconds === 0) {
+        this.message = 'Offers Ends..!';
+      } else {
+        if (this.seconds < 0) { this.seconds = 60; } // reset
+        this.message = `${this.hour}. ${this.seconds} Hrs`;
+      }
+    }, 1000);
   }
 
   click: any = false;
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
-  slideName: any = 'Home' ;
+  slideName: any = 'Home';
 
   isvisible: any = false;
+  deliveryAvilability: any = false;
+  popUpisvisible: any = false;
   productDetails: any = true;
   storedetailsVisible: any = false;
+  noDataFound: any = false;
+  offerListVisible: any = true;
 
   getCategoryList: any = [];
   offerlist: any = [];
-  offerView:any = []
-  storedetails:any = []
+  offerView: any = []
+  storedetails: any = []
 
-  async popup(ev: any) {
-    const popover = await this.popoverController.create({
-      component: ReportSellerComponent,
-      cssClass: 'my-custom-class',
-      event: ev,
-      translucent: true
-    });
-    await popover.present();
+  storeTbid: any;
+  storeLogo: any;
+  storeName: any;
+  productName: any;
+  productImage: any;
+  description: any;
+  offer: any;
+  totalPrice: any;
+  offerPrice: any;
+  offerTime: any;
 
-    const { role } = await popover.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+  storeAddress: any;
+  websiteLink: any;
+  whatsApp: any;
+  contact: any;
+  instagram: any;
+
+  others: any;
+  storeID: any;
+  spamMsg: any;
+  storeNa:any;
+  offerDenaid:any;
+
+
+
+
+  hidepopup() {
+    this.popUpisvisible = false;
   }
+  showPopup() {
+    this.popUpisvisible = true;
+
+  }
+
+  spam(val) {
+    this.spamMsg = val
+  }
+
+  storeNA(val) {
+    this.storeNa = val
+  }
+
+  OfferDenaid(val) {
+    this.offerDenaid = val
+  }
+
+  reportSeller() {
+
+    const obj = {
+      store_name: this.storeID,
+      spam_msg: this.spamMsg,
+      store: this.storeNa,
+      offer_denied: this.offerDenaid,
+      others: this.others
+    }
+
+    console.log(obj);
+    
+    this.http.post('/seller_report', obj).subscribe((response: any) => {
+      console.log(response);
+      if (response.success == "true") {
+        this.others = ''
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Report Successfully'
+        })
+        this.popUpisvisible = false
+      }
+
+    }, (error: any) => {
+      console.log(error);
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Something Went Wrong'
+      })
+    });
+  }
+
+
+
+
   slideOpts = {
     slidesPerView: 3.0,
     coverflowEffect: {
@@ -87,18 +212,31 @@ export class FolderPage implements OnInit {
     },
   }
 
- 
+
 
 
   singleCard(tbid) {
+
     const o = tbid
     this.isvisible = true;
+    this.storedetailsVisible = false
+    this.productDetails = true
+
+    
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
-      this.offerView = response.records
-      console.log(this.offerView);
-      
-     
+        this.storeTbid = response.records.tbid
+        this.storeLogo = response.records.store_logo
+        this.storeName = response.records.store_name
+        this.productName = response.records.product
+        this.productImage = response.records.product_image
+        this.description = response.records.description
+        this.offer = response.records.offer
+        this.totalPrice = response.records.total_cost
+        this.offerPrice = response.records.offer_price
+        this.offerTime = response.records.offer_time
+
+
       }
 
     }, (error: any) => {
@@ -106,19 +244,32 @@ export class FolderPage implements OnInit {
     });
   }
 
-  storeDetails(storenamae) {
+  storeDetails(storename) {
     this.storedetailsVisible = true;
     this.productDetails = false;
 
-    const obj ={
-      store_name: storenamae
+    const obj = {
+      store_name: storename
     }
+    console.log(obj);
 
-    this.http.post('/seller_store_details', obj).subscribe((response: any) => {
+
+    this.http.post('/store_details_user', obj).subscribe((response: any) => {
       this.storedetails = response.records;
       console.log(this.storedetails);
+      this.storeAddress = response.records.store_address
+      this.websiteLink = response.records.website
+      this.whatsApp = response.records.whatsapp
+      this.contact = response.records.contact_number
+      this.instagram = response.records.instagram
+      this.storeID = response.records.tbid
+      this.deliveryAvilability = response.records.delivery_availability
 
-    }, (error: any) => {
+      console.log(this.deliveryAvilability);
+      
+
+    }
+    , (error: any) => {
       console.log(error);
     }
     );
@@ -154,7 +305,7 @@ export class FolderPage implements OnInit {
   }
 
 
-  ProductList() {
+  offerList() {
     this.http.get('/list_all_offer',).subscribe((response: any) => {
       this.offerlist = response.records;
       console.log(this.offerlist);
@@ -165,27 +316,46 @@ export class FolderPage implements OnInit {
     );
   }
 
+  clickSlideHome() {
+    this.slideName = "Home";
+    this.offerListVisible = true;
+    this.noDataFound = false;
+    this.isvisible = false
+    this.offerList()
+  }
+
   clickSlide(item) {
     console.log(item);
+    this.isvisible = false
     this.slideName = item;
+    if (this.slideName == "Home") {
+      this.offerListVisible = true;
+      this.noDataFound = false;
+      this.offerList()
+    }
 
     const obj = {
       store_category: item
     }
-    
-    console.log(obj);
-    
-    this.http.post('/list_product_category', obj).subscribe((response: any) => {
-      this.offerlist = response.records;
-      console.log(response);
+    this.http.post('/list_offer_category', obj).subscribe((response: any) => {
+      if (response.success == "true") {
+        this.offerlist = response.records;
+        console.log(response);
+        this.offerListVisible = true;
+        this.noDataFound = false;
+      } else {
 
+      }
     }, (error: any) => {
       console.log(error);
+      this.offerListVisible = false;
+      this.noDataFound = true;
+
     }
     );
-    
-
   }
+
+
 
 
 

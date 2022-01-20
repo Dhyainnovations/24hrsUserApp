@@ -59,7 +59,7 @@ export class MyprofilePage implements OnInit {
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
   
   PopupModel: any = false;
-
+  password:any = ''
   updateUsername:any = this.userdetails.username;
   updateMobile:any = this.userdetails.mobile;
   updateEmail:any = this.userdetails.email;
@@ -151,6 +151,7 @@ export class MyprofilePage implements OnInit {
         {
           name: 'Place',
           placeholder: 'Password',
+          type:'text'
           
         },
       ],
@@ -158,12 +159,65 @@ export class MyprofilePage implements OnInit {
         {
           text: 'Cancel',
           handler: (data: any) => {
+            
             console.log('Canceled', data);
           }
         },
         {
           text: 'Delete Account!',
           handler: (data: any) => {
+            this.password = data
+            const obj = {
+              tbid : this.userdetails.id,
+              password :this.password
+            }
+            console.log(obj);
+            
+            
+            this.http.post('/user_delete_account', obj).subscribe((response: any) => {
+              console.log(response);
+              if(response.success == "true"){
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+          
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Account Deleted Successfully.'
+                })
+              }
+
+            
+             
+        
+            }, (error: any) => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+        
+              Toast.fire({
+                icon: 'error',
+                title: 'Something Went Wrong'
+              })
+              console.log(error);
+              
+            })
             console.log('Saved Information', data);
           }
         }

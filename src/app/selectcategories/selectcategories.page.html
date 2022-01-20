@@ -5,6 +5,7 @@
     <div class="container mt-4">
       <ion-chip  (click)="toggleClass(item)" [ngClass]="{'active': item.active}" *ngFor="let item of getCategoryList" style="color:#23d5ab;background-color: #fffcfa;">
         <ion-label >{{ item.category }}</ion-label>
+        <!-- <ion-icon  style="color:#121212" name="checkmark-circle-sharp"></ion-icon> -->
       </ion-chip>
     </div>
 

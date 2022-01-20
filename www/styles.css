@@ -1341,6 +1341,16 @@ sub {
   margin-right: 4px;
   cursor: pointer;
 }
+#productCard {
+  border: 1px solid #fff;
+  box-shadow: 3px 3px 16px 4px #ccc;
+  margin-left: 8px !important;
+  margin-right: 6px !important;
+  margin: 6px;
+  width: 45%;
+  background-color: #fff !important;
+  border-radius: 2px;
+}
 .icon {
   margin: 10px;
   background-color: #fff;

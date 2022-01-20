@@ -56,6 +56,7 @@ export class MyalarmsPage implements OnInit {
 
   isVisible:any = false;
   alarmList:any = []
+  tbid:any;
 
   searchPage(){
     this.router.navigate(['/searchpage'])
@@ -84,6 +85,90 @@ export class MyalarmsPage implements OnInit {
     }, (error: any) => {
       console.log(error);
     });
+  }
+
+  deleteAlarm(value){
+    this.tbid =value;
+    this.presentAlertConfirm()
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'buttonCss ',
+      
+      header: 'Are you sure want to delete?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'alert-danger',
+          handler: (blah) => {
+            console.log('Confirm Cancel: No');
+          }
+        }, {
+          text: 'Yes',
+          cssClass: 'buttonCss',
+          handler: () => {
+            
+            console.log('Confirm Okay');
+
+            const obj = {
+              tbid : this.tbid
+            }
+            console.log(obj)
+
+            this.http.post('/delete_store_alarm', obj).subscribe((response: any) => {
+              console.log(response);
+             if(response.success == "true"){
+              const encodeText: any = btoa(JSON.stringify(obj))
+              localStorage.setItem("24hrs-user-data", encodeText)
+              localStorage.setItem("token", response.token)
+              localStorage.setItem("loginstatus", response.user_status)
+      
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+      
+              Toast.fire({
+                icon: 'success',
+                title: 'Alarm Deleted successfully'
+              })
+             }
+        
+            }, (error: any) => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+        
+              Toast.fire({
+                icon: 'error',
+                title: 'Something Went Wrong'
+              })
+              console.log(error);
+            });
+           
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
