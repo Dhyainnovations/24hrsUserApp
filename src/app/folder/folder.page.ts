@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../shared/http.service';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { ReportSellerComponent } from '../report-seller/report-seller.component';
 import { ThemeService } from '../darkmode/theme.service';
 import { trigger, style, state, animate, transition } from '@angular/animations';
 
@@ -84,7 +83,7 @@ export class FolderPage implements OnInit, OnDestroy {
   slideName: any = 'Home';
 
   isvisible: any = false;
-  deliveryAvilability: any = false;
+  deliveryAvilability: any ;
   popUpisvisible: any = false;
   productDetails: any = true;
   storedetailsVisible: any = false;
@@ -131,24 +130,42 @@ export class FolderPage implements OnInit, OnDestroy {
   }
 
   spam(val) {
-    this.spamMsg = val
+    console.log(this.spamMsg);
+    if(this.spamMsg == true){
+      this.spam_msg = "spam Msg"
+    }else{
+      this.spam_msg = ""
+    }
+  
   }
 
   storeNA(val) {
-    this.storeNa = val
+    if(this.store == true){
+      this.store = "store NA"
+    }else{
+      this.store = ""
+    }
   }
 
   OfferDenaid(val) {
-    this.offerDenaid = val
+    if(this.store == true){
+      this.offer_denied = "offer Denaid"
+    }else{
+      this.offer_denied = ""
+    }
   }
+
+  spam_msg:any;
+  store:any;
+  offer_denied:any;
 
   reportSeller() {
 
     const obj = {
       store_name: this.storeID,
-      spam_msg: this.spamMsg,
-      store: this.storeNa,
-      offer_denied: this.offerDenaid,
+      spam_msg: this.spam_msg,
+      store: this.store,
+      offer_denied: this.offer_denied,
       others: this.others
     }
 
@@ -264,6 +281,12 @@ export class FolderPage implements OnInit, OnDestroy {
       this.instagram = response.records.instagram
       this.storeID = response.records.tbid
       this.deliveryAvilability = response.records.delivery_availability
+
+      if(this.deliveryAvilability == "1" || this.deliveryAvilability == false){
+        this.deliveryAvilability = false
+      }else{
+        this.deliveryAvilability = true
+      }
 
       console.log(this.deliveryAvilability);
       

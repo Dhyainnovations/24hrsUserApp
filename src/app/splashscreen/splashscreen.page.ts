@@ -12,9 +12,7 @@ export class SplashscreenPage implements OnInit {
 
   constructor( private router: Router, route: ActivatedRoute) { 
     route.params.subscribe(val => {
-      console.log(localStorage.getItem("24hrs-user-data"));
       var userdetails = (localStorage.getItem("24hrs-user-data"));
-      console.log(userdetails);
       
       
       setTimeout(()=>{

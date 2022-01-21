@@ -79,7 +79,7 @@ export class MyprofilePage implements OnInit {
   }
 
   changeCategory(){
-    this.router.navigate(['selectcategories'])
+    this.router.navigate(['change-category'])
   }
 
   updateProfile(){

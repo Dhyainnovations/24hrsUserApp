@@ -46,7 +46,9 @@ export class MyalarmsPage implements OnInit {
     private toastCtrl: ToastController, route: ActivatedRoute,public alertController: AlertController) { 
       route.params.subscribe(val => {
         
-        this.getAlarmList()
+        // this.getAlarmList()
+        this.getStoreAlarmList()
+        this.getproductAlarmList()
         
       });
     }
@@ -55,7 +57,8 @@ export class MyalarmsPage implements OnInit {
   }
 
   isVisible:any = false;
-  alarmList:any = []
+  storeAlarmList:any = []
+  productAlarmList:any = []
   tbid:any;
 
   searchPage(){
@@ -72,7 +75,7 @@ export class MyalarmsPage implements OnInit {
 
   getAlarmList() {
     this.http.get('/list_all_alarm').subscribe((response: any) => {
-      this.alarmList = response.records;
+     
       console.log(response);
       
       // if(response.success == "false"){
@@ -87,7 +90,16 @@ export class MyalarmsPage implements OnInit {
     });
   }
 
-  deleteAlarm(value){
+  storeAlram : any = false;
+
+  deleteStoreAlarm(value){
+    this.storeAlram = true
+    this.tbid =value;
+    this.presentAlertConfirm()
+  }
+
+  deleteProductAlarm(value){
+    this.storeAlram = false
     this.tbid =value;
     this.presentAlertConfirm()
   }
@@ -117,14 +129,11 @@ export class MyalarmsPage implements OnInit {
             }
             console.log(obj)
 
+
+           if(this.storeAlram == true){
             this.http.post('/delete_store_alarm', obj).subscribe((response: any) => {
               console.log(response);
              if(response.success == "true"){
-              const encodeText: any = btoa(JSON.stringify(obj))
-              localStorage.setItem("24hrs-user-data", encodeText)
-              localStorage.setItem("token", response.token)
-              localStorage.setItem("loginstatus", response.user_status)
-      
               const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -141,6 +150,7 @@ export class MyalarmsPage implements OnInit {
                 icon: 'success',
                 title: 'Alarm Deleted successfully'
               })
+              this.getStoreAlarmList()
              }
         
             }, (error: any) => {
@@ -162,6 +172,49 @@ export class MyalarmsPage implements OnInit {
               })
               console.log(error);
             });
+           }else{
+            this.http.post('/delete_alarm_product', obj).subscribe((response: any) => {
+              console.log(response);
+             if(response.success == "true"){
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+      
+              Toast.fire({
+                icon: 'success',
+                title: 'Alarm Deleted successfully'
+              })
+              this.getproductAlarmList()
+             }
+        
+            }, (error: any) => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+        
+              Toast.fire({
+                icon: 'error',
+                title: 'Something Went Wrong'
+              })
+              console.log(error);
+            });
+           }
            
           }
         }
@@ -169,6 +222,29 @@ export class MyalarmsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+
+  getStoreAlarmList() {
+    this.http.get('/store_read_alarm').subscribe((response: any) => {
+      this.storeAlarmList = response.records
+      console.log(response);
+      
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+
+  getproductAlarmList() {
+    this.http.get('/product_read_alarm').subscribe((response: any) => {
+      this.productAlarmList = response.records
+      console.log(response);
+      
+    }, (error: any) => {
+      console.log(error);
+    });
   }
 
 }

@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'myalarms',
     loadChildren: () => import('./myalarms/myalarms.module').then( m => m.MyalarmsPageModule)
   },
+  {
+    path: 'change-category',
+    loadChildren: () => import('./change-category/change-category.module').then( m => m.ChangeCategoryPageModule)
+  },
   
 ];
 
