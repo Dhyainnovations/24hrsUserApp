@@ -1,79 +1,181 @@
+ion-menu ion-content {
+  --background: var(--ion-item-background, var(--ion-background-color, #fff));
+  --background: linear-gradient(135deg, #71b7e6, #9b59b6) !important;
+}
 
-.test {
-  --ion-color-primary: #eb4b58 !important;
-  --ion-color-primary-rgb: 235,75,88 !important;
-  --ion-color--primary-contrast: #ffffff !important;
-  --ion-color--primary-contrast-rgb: 255,255,255 !important;
-  --ion-color-primary-shade: #cf424d !important;
-  --ion-color-primary-tint: #ed5d69 !important;
+ion-menu.md ion-content {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+}
 
-  ion-content{
-    --background: #121211 !important;
+ion-menu.md ion-list {
+  padding: 20px 0;
+}
+
+ion-menu.md ion-note {
+  margin-bottom: 30px;
+}
+
+ion-menu.md ion-list-header,
+ion-menu.md ion-note {
+  padding-left: 10px;
+}
+
+ion-menu.md ion-list#inbox-list {
+  border-bottom: 1px solid var(--ion-color-step-150, #11f1bd);
+}
+
+ion-menu.md ion-list#inbox-list ion-list-header {
+  font-size: 22px;
+  font-weight: 600;
+
+  min-height: 20px;
+}
+
+ion-menu.md ion-list#labels-list ion-list-header {
+  font-size: 16px;
+
+  margin-bottom: 18px;
+
+  color: #757575;
+
+  min-height: 26px;
+}
+
+ion-menu.md ion-item {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  border-radius: 4px;
+}
+
+ion-menu.md ion-item.selected {
+  --background: rgba(var(--ion-color-primary-rgb), 0.14);
+}
+
+ion-menu.md ion-item.selected ion-icon {
+  color: var(--ion-color-primary);
+}
+
+ion-menu.md ion-item ion-icon {
+  color: #616e7e;
+}
+
+ion-menu.md ion-item ion-label {
+  font-weight: 500;
+}
+
+ion-menu.ios ion-content {
+  --padding-bottom: 20px;
+}
+
+ion-menu.ios ion-list {
+  padding: 20px 0 0 0;
+}
+
+ion-menu.ios ion-note {
+  line-height: 24px;
+  margin-bottom: 20px;
+}
+
+ion-menu.ios ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 50px;
+}
+
+ion-menu.ios ion-item.selected ion-icon {
+  color: var(--ion-color-primary);
+}
+
+ion-menu.ios ion-item ion-icon {
+  font-size: 24px;
+  color: #73849a;
+}
+
+ion-menu.ios ion-list#labels-list ion-list-header {
+  margin-bottom: 8px;
+}
+
+ion-menu.ios ion-list-header,
+ion-menu.ios ion-note {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+ion-menu.ios ion-note {
+  margin-bottom: 8px;
+}
+
+ion-note {
+  display: inline-block;
+  font-size: 16px;
+  color:#11f1bd !important;
+  color: var(--ion-color-medium-shade);
+}
+ion-list{
+  background: #fff !important;
+  height:100vh !important;
+  width: 100vw !important;
+}
+
+ion-item.selected {
+  // background: linear-gradient(135deg, #1abcf7, #11f1bd) !important;
+  ion-label{
+    color: #11f1bd !important;
+    font-size: 18px;
+    font-weight: 900;
+   
   }
-  
+  .icon{
+   background-color: #fff !important;
+   border-radius: 70% !important;
+  }
+}
+ion-menu-button{
+  color:#fff !important;
+}
+ion-item{
+  --background: transparent !important;
+  margin: 10px !important;
+}
+ion-label{
+  margin: 10px !important;
+  color:#37373a !important;
 }
 
-
-
-.list{
-  color: #272A3F;
-  font-size: 15px;
-  margin: 18px -5px;
-}
-#icon{
-  background-color: rgb(197, 248, 147) !important;
-  border-radius: 15px !important;
-  width:25px;
-  height:30px;
-  
+ion-icon{
+  color: #ffff !important;
 }
 ion-item{
   --border-color: #fff;
 }
-.row{
-  margin:25px;
-  margin-left:0!important
-}
-ion-menu-button {
-  margin:20px;
-}
-img:hover{
-cursor: pointer;
-}
-ion-menu-button:hover{
-  --color:#fff;
- 
-}
-.close{
-  margin-left: 30px;
-  color:#676767;
-}
-.close:hover{
-  color:#23d5ab;
-}
-.row{
-  margin-bottom: 8px;
-}
 
-#sideMenuList .active{
-  color: #23d5ab;
-  font-weight: 700;
+// ion-split-pane {
+//   background: linear-gradient(135deg, #71b7e6, #9b59b6) !important;
+// }
+
+.icon{
+  background-color: transparent;
+  border: none !important;
+  box-shadow: none !important;
+  height: 100vh;
+  width: 100vw;
 }
 
 .dot {
   text-align: center;
   margin-top: 0 !important;
-  height: 110px !important;
-  width: 95% !important;
+  margin-left: 20% !important;
   background-color: #fff;
   border-radius: 20px;
   display: inline-block;
   box-shadow: 3px -2px 11px 3px#ccc;
 }
 
-
 ion-content {
-  background-color:#fff !important;
+  background: #fff !important;
   // background: linear-gradient(to bottom, darkturquoise
   // 0%, #d1f2e7
   // 100%) !important;

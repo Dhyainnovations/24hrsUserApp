@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header  style="margin-top: -15px;">
   <ion-toolbar class="new-background-color">
     <ion-buttons slot="start">
       <ion-menu-button style="margin-top:15px;color:#fff" autoHide="false"></ion-menu-button>
@@ -31,10 +31,10 @@
 <ion-content >
   <div class="container">
     <div class="row">
-      <div @slidelefttitle class="col-6">
+      <div  class="col-6">
         <h3>My Alarms:</h3>
       </div>
-      <div @slidelefttitle class="col-6 ion-text-right">
+      <div  class="col-6 ion-text-right">
         <button (click)="newAlarm()" class="btn btn-sm btn-set-new-alarm">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -51,7 +51,7 @@
 
     <!-- <h4 @slidelefttitle>Store Alarms:</h4> -->
 <!-- store alarms-->
-    <div *ngFor="let alarm of storeAlarmList" @slidelefttitle class=" card mt-4">
+    <div *ngFor="let alarm of storeAlarmList"  class=" card mt-4">
       <div class="row">
         <div class="col-10">
           <img style="margin: 7px;" height="30px" width="30px" src="assets/onion.PNG" alt="">
@@ -72,7 +72,7 @@
     <!-- <h4 @slidelefttitle>Product Alarms:</h4> -->
     <!-- product alarms-->
 
-    <div *ngFor="let alarm of productAlarmList" @slidelefttitle class=" card mt-4">
+    <div *ngFor="let alarm of productAlarmList"  class=" card mt-4">
       <div class="row">
         <div class="col-10">
           <img style="margin: 7px;" height="30px" width="30px" src="assets/onion.PNG" alt="">
