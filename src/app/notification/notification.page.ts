@@ -22,22 +22,23 @@ export class NotificationPage implements OnInit {
 
   notificationList:any = []
 
+  //-------------- Navigate to searchpage ----------//
   searchPage(){
     this.router.navigate(['/searchpage'])
   }
   
+  //-------------- Navigate to setalarmPage ----------//
   setalarm(){
     this.router.navigate(['/setalarm'])             
   }
 
+  //-------------- Get Alaram List ----------//
   alaramList(){
     this.http.get('/alarm_notification', ).subscribe((response: any) => {
       console.log(response);
       this.notificationList = response.records
       console.log(this.notificationList);
      
-
-
     }, (error: any) => {
       console.log(error);
     });

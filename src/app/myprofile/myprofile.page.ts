@@ -1,4 +1,4 @@
-import { Component,OnInit, } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from '../shared/http.service';
 import Swal from 'sweetalert2';
@@ -17,6 +17,8 @@ import {
   selector: 'app-myprofile',
   templateUrl: './myprofile.page.html',
   styleUrls: ['./myprofile.page.scss'],
+
+  //------------- Animations ----------//
   animations: [
     trigger('fadein', [
       state('void', style({ opacity: 0 })),
@@ -28,13 +30,13 @@ import {
     trigger('slidelefttitle', [
       transition('void => *', [
         style({ opacity: 0, transform: 'translateX(150%)' }),
-        animate('900ms 300ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }, ))
+        animate('900ms 300ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 },))
       ])
     ]),
     trigger('slideup', [
       transition('void => *', [
         style({ opacity: 0, transform: 'translateY(150%)' }),
-        animate('900ms 300ms ease-out', style({ transform: 'translateY(0%)', opacity: 1 }, ))
+        animate('900ms 300ms ease-out', style({ transform: 'translateY(0%)', opacity: 1 },))
       ])
     ])
   ]
@@ -42,59 +44,61 @@ import {
 export class MyprofilePage implements OnInit {
 
   constructor(private router: Router, private http: HttpService,
-    private toastCtrl: ToastController, route: ActivatedRoute,public alertController: AlertController) {
-      route.params.subscribe(val => {
-        this.PopupModel = false;
-        console.log(this.userdetails);
-        this.updateProfile()
-        this.getSelectCategory()
-        
-      });
-    }
+    private toastCtrl: ToastController, route: ActivatedRoute, public alertController: AlertController) {
+    route.params.subscribe(val => {
+      this.PopupModel = false;
+      console.log(this.userdetails);
+      this.updateProfile()
+      this.getSelectCategory()
+
+    });
+  }
 
   ngOnInit() {
     console.log(this.userdetails);
-    
+
   }
+
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
-  
   PopupModel: any = false;
-  password:any = ''
-  updateUsername:any = this.userdetails.username;
-  updateMobile:any = this.userdetails.mobile;
-  updateEmail:any = this.userdetails.email;
+  password: any = ''
+  updateUsername: any = this.userdetails.username;
+  updateMobile: any = this.userdetails.mobile;
+  updateEmail: any = this.userdetails.email;
+  getCategoryList: any = [];
 
-  getCategoryList:any = [];
-
-  support(){
+  //-------------- Navigate to supportPage ----------//
+  support() {
     this.router.navigate(['/support'])
   }
 
-  backToprivious(){
+  backToprivious() {
     this.PopupModel = false;
-    
-   }
+
+  }
   popupModelOpen() {
-      this.PopupModel = true;
+    this.PopupModel = true;
   }
 
-  changeCategory(){
+  //-------------- Navigate to change-categoryPage ----------//
+  changeCategory() {
     this.router.navigate(['change-category'])
   }
 
-  updateProfile(){
+  //-------------- update profile Api call ----------//
+  updateProfile() {
     const updateData = {
       tbid: this.userdetails.id,
       user_name: this.updateUsername,
       email_id: this.updateEmail,
       mobile_number: this.updateMobile
     }
-    this.http.get('/user_update_profile', ).subscribe((response: any) => {
+    this.http.get('/user_update_profile',).subscribe((response: any) => {
       console.log(response);
       if (response.success == "true") {
-        
+
         this.PopupModel = false;
-        
+
       } else {
 
       }
@@ -103,16 +107,14 @@ export class MyprofilePage implements OnInit {
     });
 
   }
-
-  back(){
+  //-------------- Navigate to homepage ----------//
+  back() {
     this.router.navigate(['/homepage'])
   }
-  logout(){
-    localStorage.removeItem("24hrs-user-data")
-    this.router.navigate(['/'])
-  }
 
-  deleteAccount(){
+
+  //-------------- Delete account func ----------//
+  deleteAccount() {
     this.presentAlertConfirm()
   }
 
@@ -151,15 +153,15 @@ export class MyprofilePage implements OnInit {
         {
           name: 'Place',
           placeholder: 'Password',
-          type:'text'
-          
+          type: 'text'
+
         },
       ],
       buttons: [
         {
           text: 'Cancel',
           handler: (data: any) => {
-            
+
             console.log('Canceled', data);
           }
         },
@@ -168,15 +170,15 @@ export class MyprofilePage implements OnInit {
           handler: (data: any) => {
             this.password = data
             const obj = {
-              tbid : this.userdetails.id,
-              password :this.password
+              tbid: this.userdetails.id,
+              password: this.password
             }
             console.log(obj);
-            
-            
+
+
             this.http.post('/user_delete_account', obj).subscribe((response: any) => {
               console.log(response);
-              if(response.success == "true"){
+              if (response.success == "true") {
                 const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
@@ -188,16 +190,16 @@ export class MyprofilePage implements OnInit {
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                   }
                 })
-          
+
                 Toast.fire({
                   icon: 'success',
                   title: 'Account Deleted Successfully.'
                 })
               }
 
-            
-             
-        
+
+
+
             }, (error: any) => {
               const Toast = Swal.mixin({
                 toast: true,
@@ -210,13 +212,13 @@ export class MyprofilePage implements OnInit {
                   toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
               })
-        
+
               Toast.fire({
                 icon: 'error',
                 title: 'Something Went Wrong'
               })
               console.log(error);
-              
+
             })
             console.log('Saved Information', data);
           }
@@ -227,13 +229,16 @@ export class MyprofilePage implements OnInit {
     });
   }
 
+
+  //----------- get store category List ---------//
   getSelectCategory() {
     this.http.get('/store_category').subscribe((response: any) => {
       this.getCategoryList = response.records
       console.log(response);
-      
+
     }, (error: any) => {
       console.log(error);
     });
   }
+
 }

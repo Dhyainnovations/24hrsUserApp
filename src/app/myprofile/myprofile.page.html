@@ -1,4 +1,4 @@
-<ion-content  >
+<ion-content>
   <div class="top-container">
     <div class="row">
 
@@ -13,13 +13,16 @@
       <div class="col-6 mt-4">
         <!-- <p style="color: #fff;font-size: 30px;">My profile</p> -->
       </div>
+
+      <!------------ Home icon ----------------->
       <div class="col-3 ion-text-center mt-5">
         <ion-icon name="home" (click)="back()"
           style="color:#fff;cursor:pointer;height:25px;width: 30px;margin-top: -10px;"></ion-icon>
       </div>
     </div>
 
-    <div  class="row">
+    <!------------ Display Login UserDetails ----------------->
+    <div class="row">
       <div class="col-9 mt-1 mx-3">
         <p style="color: #fff;font-size: 30px;">{{updateUsername}}</p>
         <p style="color: #fff;font-size: 15px;margin-top: -15px">{{updateMobile}}</p>
@@ -41,44 +44,34 @@
 
   </div>
 
+  <!------------ Show category's List ----------------->
   <div @slideup class="container">
     <div class="row mt-5">
-      <!-- <div class="col-6 ">
-        <p class="name">Mobile :</p>
-      </div>
-      <div class="col-6 ">
-        <input type="text" id="edit-field" disabled [value]="userdetails.mobile">
-      </div> -->
-
-      <!-- <div class="col-6">
-        <p class="name">Mylocation :</p>
-      </div>
-      <div class="col-6">
-        <input type="text" id="edit-field" disabled value="Coimbatore">
-      </div> -->
-
       <div class="col-6">
         <p class="name">Categories :</p>
       </div>
       <div class="col-6">
-        <!-- <input type="text" id="edit-field" disabled value="Meat,Fruits"> -->
-        <button type="button" (click)="changeCategory()" class="btn btn-success btn-sm update-category-btn">Change Preference</button>
-       
+
+        <button type="button" (click)="changeCategory()" class="btn btn-success btn-sm update-category-btn">Change
+          Preference</button>
+
       </div>
       <div class="col-12">
         <div class="container mt-1" id="SelectedList">
           <ion-chip *ngFor="let category of getCategoryList">
             <ion-label>{{category.category}}</ion-label>
           </ion-chip>
-      </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div @slideup class="ion-text-center" style="margin-top: 20%;">
+  <!------------ Delete Account button ----------------->
+  <div class="ion-text-center" style="margin-top: 20%;">
     <button (click)="deleteAccount()" class="btn btn-sm delete-acc-btn ">Delete My Account</button>
   </div>
 
+  <!------------ update profile PopUp ----------------->
   <div class="card" *ngIf="PopupModel" style="margin-top: 20px;" id="card">
     <div class="row" id="modal">
       <div class="hidden">
@@ -91,21 +84,18 @@
         </div>
         <h5 style="margin:10px; color: #5C5C5C;"> <b>Edit Here:</b></h5>
         <div class="row" style="padding-left: 10px;">
-          <!-- <div class="col-12 ion-text-center">
-            <img class="editprofile" src="assets/sparrow.JPG" alt="">
-          </div> -->
+
           <div class="col-6">
             <p class="edit-name">Username :</p>
           </div>
           <div class="col-6">
-            <input [(ngModel)]="updateUsername"    type="text">
-            <!-- <input  type="text" value="{{userdetails.username}}"  [(ngModel)]="username"> -->
+            <input [(ngModel)]="updateUsername" type="text">
           </div>
           <div class="col-6">
             <p class="edit-name">Mobile number :</p>
           </div>
           <div class="col-6">
-            <input [(ngModel)]="updateMobile" type="text" id="edit-field" >
+            <input [(ngModel)]="updateMobile" type="text" id="edit-field">
           </div>
         </div>
 
@@ -114,7 +104,7 @@
             <p class="edit-name">Email:</p>
           </div>
           <div class="col-6">
-            <input [(ngModel)]="updateEmail" type="text" id="edit-field" >
+            <input [(ngModel)]="updateEmail" type="text" id="edit-field">
           </div>
         </div>
         <div style="width: 100%; text-align: center;">
@@ -123,7 +113,6 @@
       </div>
     </div>
 
-    
   </div>
 
 

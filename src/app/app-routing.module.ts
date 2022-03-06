@@ -63,7 +63,7 @@ const routes: Routes = [
     path: 'change-category',
     loadChildren: () => import('./change-category/change-category.module').then( m => m.ChangeCategoryPageModule)
   },
-  
+ 
 ];
 
 @NgModule({

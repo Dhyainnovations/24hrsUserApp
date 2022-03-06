@@ -12,6 +12,8 @@ import { trigger, style, state, animate, transition } from '@angular/animations'
   selector: 'app-folder',
   templateUrl: './folder.page.html',
   styleUrls: ['./folder.page.scss'],
+  
+  //------------- Animations ----------//
   animations: [
     trigger('fadein', [
       state('void', style({ opacity: 0 })),
@@ -77,24 +79,19 @@ export class FolderPage implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  click: any = false;
-
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
   slideName: any = 'Home';
-
   isvisible: any = false;
-  deliveryAvilability: any ;
+  deliveryAvilability: any;
   popUpisvisible: any = false;
   productDetails: any = true;
   storedetailsVisible: any = false;
   noDataFound: any = false;
   offerListVisible: any = true;
-
   getCategoryList: any = [];
   offerlist: any = [];
   offerView: any = []
   storedetails: any = []
-
   storeTbid: any;
   storeLogo: any;
   storeName: any;
@@ -105,20 +102,20 @@ export class FolderPage implements OnInit, OnDestroy {
   totalPrice: any;
   offerPrice: any;
   offerTime: any;
-
   storeAddress: any;
   websiteLink: any;
   whatsApp: any;
   contact: any;
   instagram: any;
-
   others: any;
   storeID: any;
   spamMsg: any;
-  storeNa:any;
-  offerDenaid:any;
-
-
+  storeNa: any;
+  offerDenaid: any;
+  spam_msg: any;
+  store: any;
+  offer_denied: any;
+  locationChangeVisible:any = false;
 
 
   hidepopup() {
@@ -128,39 +125,50 @@ export class FolderPage implements OnInit, OnDestroy {
     this.popUpisvisible = true;
 
   }
-
-  spam(val) {
-    console.log(this.spamMsg);
-    if(this.spamMsg == true){
-      this.spam_msg = "spam Msg"
-    }else{
-      this.spam_msg = ""
-    }
-  
+  //--------------- Ion slide option ----------//
+  slideOpts = {
+    slidesPerView: 2.5,
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
   }
 
+  // ----------- spam report -----------//
+  spam(val) {
+    console.log(this.spamMsg);
+    if (this.spamMsg == true) {
+      this.spam_msg = "spam Msg"
+    } else {
+      this.spam_msg = ""
+    }
+
+  }
+
+  // ----------- storeNA report -----------//
   storeNA(val) {
-    if(this.store == true){
+    if (this.store == true) {
       this.store = "store NA"
-    }else{
+    } else {
       this.store = ""
     }
   }
 
+  // ----------- OfferDenaid report -----------//
   OfferDenaid(val) {
-    if(this.store == true){
+    if (this.store == true) {
       this.offer_denied = "offer Denaid"
-    }else{
+    } else {
       this.offer_denied = ""
     }
   }
 
-  spam_msg:any;
-  store:any;
-  offer_denied:any;
 
+  // ----------- Seller report Api call -----------//
   reportSeller() {
-
     const obj = {
       store_name: this.storeID,
       spam_msg: this.spam_msg,
@@ -169,8 +177,6 @@ export class FolderPage implements OnInit, OnDestroy {
       others: this.others
     }
 
-    console.log(obj);
-    
     this.http.post('/seller_report', obj).subscribe((response: any) => {
       console.log(response);
       if (response.success == "true") {
@@ -216,30 +222,12 @@ export class FolderPage implements OnInit, OnDestroy {
   }
 
 
-
-
-  slideOpts = {
-    slidesPerView: 3.0,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
-    },
-  }
-
-
-
-
+  //------------- Read one Offer(card) Api call ------------//
   singleCard(tbid) {
-
     const o = tbid
     this.isvisible = true;
     this.storedetailsVisible = false
     this.productDetails = true
-
-    
     this.http.get('/readone_offer_user?o=' + o).subscribe((response: any) => {
       if (response.success == "true") {
         this.storeTbid = response.records.tbid
@@ -252,8 +240,6 @@ export class FolderPage implements OnInit, OnDestroy {
         this.totalPrice = response.records.total_cost
         this.offerPrice = response.records.offer_price
         this.offerTime = response.records.offer_time
-
-
       }
 
     }, (error: any) => {
@@ -261,16 +247,14 @@ export class FolderPage implements OnInit, OnDestroy {
     });
   }
 
+
+  //---------------Get Store Details  Api call -------------//
   storeDetails(storename) {
     this.storedetailsVisible = true;
     this.productDetails = false;
-
     const obj = {
       store_name: storename
     }
-    console.log(obj);
-
-
     this.http.post('/store_details_user', obj).subscribe((response: any) => {
       this.storedetails = response.records;
       console.log(this.storedetails);
@@ -282,22 +266,19 @@ export class FolderPage implements OnInit, OnDestroy {
       this.storeID = response.records.tbid
       this.deliveryAvilability = response.records.delivery_availability
 
-      if(this.deliveryAvilability == "1" || this.deliveryAvilability == false){
+      if (this.deliveryAvilability == "1" || this.deliveryAvilability == false) {
         this.deliveryAvilability = false
-      }else{
+      } else {
         this.deliveryAvilability = true
       }
-
-      console.log(this.deliveryAvilability);
-      
-
     }
-    , (error: any) => {
-      console.log(error);
-    }
+      , (error: any) => {
+        console.log(error);
+      }
     );
   }
 
+  //-------------- Navigate to dashboard ----------//
   navigateHome() {
     this.storedetailsVisible = false;
     this.isvisible = false;
@@ -305,18 +286,22 @@ export class FolderPage implements OnInit, OnDestroy {
 
   }
 
+  //-------------- Navigate to searchPage ----------//
   searchPage() {
     this.router.navigate(['/searchpage'])
   }
 
+  //-------------- Navigate to setalarmPage ----------//
   setalarm() {
     this.router.navigate(['/setalarm'])
   }
 
+  //-------------- Navigate to notificationPage ----------//
   notification() {
     this.router.navigate(['/notification'])
   }
 
+  //--------- Get User Selected store Category's------------//
   getSelectCategory() {
     this.http.get('/store_category').subscribe((response: any) => {
       this.getCategoryList = response.records
@@ -327,7 +312,7 @@ export class FolderPage implements OnInit, OnDestroy {
     });
   }
 
-
+  //------------- get offer list -----------//
   offerList() {
     this.http.get('/list_all_offer',).subscribe((response: any) => {
       this.offerlist = response.records;
@@ -339,6 +324,7 @@ export class FolderPage implements OnInit, OnDestroy {
     );
   }
 
+  //------------- click home slider ----------//
   clickSlideHome() {
     this.slideName = "Home";
     this.offerListVisible = true;
@@ -347,6 +333,8 @@ export class FolderPage implements OnInit, OnDestroy {
     this.offerList()
   }
 
+
+  //------------- click  slider to fetch data based on category ----------//
   clickSlide(item) {
     console.log(item);
     this.isvisible = false
@@ -380,6 +368,9 @@ export class FolderPage implements OnInit, OnDestroy {
 
 
 
-
+  locationChange(){
+   this.locationChangeVisible = !this.locationChangeVisible;
+  }
+ 
 
 }
