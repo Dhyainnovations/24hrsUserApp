@@ -97,35 +97,7 @@ export class SignupPage implements OnInit {
     }
   }
 
-  // isUserName(username) {
-  //   console.log(username);
 
-  //   var regex = /^(?=.{4,20}$)(?:[a-zA-Z\d]+(?:(?:\.|-|_)[a-zA-Z\d])*)+$/;
-  //   this.usernameRes = (regex.test(username));
-  //   console.log(this.usernameRes);
-
-  //   if (this.usernameRes) {
-  //     this.isUserNameAlert = false
-  //   } else {
-  //     this.isUserNameAlert = true
-  //   }
-  //   return regex.test(username);
-  // }
-
-  // isMobileNum(mobilenumber) {
-  //   console.log(mobilenumber);
-
-  //   var regex = /^(\+\d{1,3}[- ]?)?\d{10}$/;
-  //   this.mobilenumberRes = (regex.test(mobilenumber));
-  //   console.log(this.mobilenumberRes);
-
-  //   if (this.mobilenumberRes) {
-  //     this.isNotMbileAlert = false
-  //   } else {
-  //     this.isNotMbileAlert = true
-  //   }
-  //   return regex.test(mobilenumber);
-  // }
 
   passwordValidation(pw) {
     console.log(pw);
@@ -186,17 +158,7 @@ export class SignupPage implements OnInit {
     }
 
 
-    // if (!this.usernameRes) {
-    //   this.isUserNameAlert = true
-    // }
-    // if (!this.mobilenumberRes) {
-    //   this.isNotMbileAlert = true
-    // }
 
-
-    // if (!this.emailidRes && !this.usernameRes && !this.mobilenumberRes ) {
-    //   return false
-    // }
     if (!this.emailidRes && !this.passwordRes) {
       return false
     }
@@ -351,6 +313,6 @@ export class SignupPage implements OnInit {
   navigateHome() {
     this.router.navigate(['/signinpage'])
   }
-  
+
 }
 
