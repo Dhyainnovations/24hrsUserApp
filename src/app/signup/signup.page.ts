@@ -347,5 +347,10 @@ export class SignupPage implements OnInit {
     this.checkedSts = e.detail.checked;
 
   }
+
+  navigateHome() {
+    this.router.navigate(['/signinpage'])
+  }
+  
 }
 

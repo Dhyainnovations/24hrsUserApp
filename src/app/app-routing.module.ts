@@ -63,6 +63,14 @@ const routes: Routes = [
     path: 'change-category',
     loadChildren: () => import('./change-category/change-category.module').then( m => m.ChangeCategoryPageModule)
   },
+  {
+    path: 'faq',
+    loadChildren: () => import('./faq/faq.module').then( m => m.FaqPageModule)
+  },
+  {
+    path: 'slide-test',
+    loadChildren: () => import('./slide-test/slide-test.module').then( m => m.SlideTestPageModule)
+  },
  
 ];
 

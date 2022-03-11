@@ -40,18 +40,7 @@ p{
 #share{
  color:#fff !important;
 }
-#kg{
-  background: linear-gradient(to left, #23a6d5
-  0%, #23d5ab
-  100%);
-  color:#fff;
-  margin-left: -15px !important;
-  border-radius: 3px !important;
-  font-size: 10px !important;
-  margin-top:4px;
- 
 
-}
 .dot {
   height: 30px;
   width: 30px;
@@ -214,6 +203,15 @@ input{
 100%);
   margin:5px;
   color: #fff;
+}
+
+ion-item{
+--background:#F4F7FA;
+height:35px;
+width: 100%;
+margin-left: 35%;
+// border: 1px solid red !important;
+--box-shadow: rgba(172, 22, 22, 0.04) 0px 3px 5px !important;
 }
 
 ion-content {

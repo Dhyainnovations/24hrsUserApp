@@ -58,14 +58,6 @@
     100%);
   }
 
-  ion-content {
-    --background: #F4F7FA !important;
-    --overflow: hidden;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-  }
 
 
   

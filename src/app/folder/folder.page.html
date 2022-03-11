@@ -40,47 +40,43 @@
 
   <!------------ Ion slides  ---------------->
   <div class="div-slides ion-text-left">
-    <ion-slides  slidesPerView="3" spaceBetween="1" [options]="slideOpts">
-      <ion-slide  text-start>
+    <ion-slides slidesPerView="3" spaceBetween="1" [options]="slideOpts">
+      <ion-slide text-start>
         <p [style.border-bottom]="slideName == 'Home' ? '2px solid red' : '#23d5ab' "
           [style.color]="slideName == 'Home' ? '#eb154b' : '#23d5ab' " (click)="clickSlideHome('Home')"
           class="tam-title ion-text-left">Home</p>
       </ion-slide>
-      <ion-slide slidesPerView="3" *ngFor="let category of getCategoryList" (mouseup)="clickSlide(category.tbid)" text-start>
+      <ion-slide slidesPerView="3" *ngFor="let category of getCategoryList" (mouseup)="clickSlide(category.tbid)"
+        text-start>
         <p [style.border-bottom]="slideName == category.tbid ? '2px solid red' : '#23d5ab' "
-          [style.color]="slideName == category.tbid ? '#eb154b' : '#23d5ab' "                                   
-          class="tam-title ion-text-left"> {{category.category}} </p>
+          [style.color]="slideName == category.tbid ? '#eb154b' : '#23d5ab' " class="tam-title ion-text-left">
+          {{category.category}} </p>
       </ion-slide>
     </ion-slides>
   </div>
 
 
- <div style="margin-top: -10%;" class="row">
-   <div class="col-6">
-    <h5 style="margin: 20px;color: #272A3F;"> Live Offers</h5>
-   </div>
-   <div class="col-6">
-    <h5 style="margin: 20px;color: #272A3F;margin-left: 18%;margin-top: 23px; font-size: 14px;">
-      coimbatore
-      <svg (click)="locationChange()" style="margin-left:12%;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#23d5ab" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-      </svg>
-       </h5>
-   </div>
-
-   <div *ngIf="locationChangeVisible" style="margin-top: -5%;" class="col-12">
-    <ion-item>
-      <ion-label style="font-size:15px !important;color: #23d5ab;">Select Location:</ion-label>
-      <ion-select interface="popover">
-        <ion-select-option value="1">Coimbatore</ion-select-option>
-        <ion-select-option value="2">Chennai</ion-select-option>
-        <ion-select-option value="3">Madhurai</ion-select-option>
-        <ion-select-option value="4">Salam</ion-select-option>
-        <ion-select-option value="5">Trichy</ion-select-option>   
-      </ion-select>
-    </ion-item>
-   </div>
- </div>
+  <div style="margin-top: -7%;" class="row">
+    <div class="col-4 mt-2">
+      <h6 style="color: #272A3F;margin-left:15%;"> Live Offers</h6>
+    </div>
+    <div class="col-8 mt-2">
+      <ion-item>
+        <svg style="margin: 5px;" (click)="locationChange()" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          fill="#23d5ab" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+          <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+        </svg>
+        <ion-label style="font-size:13px !important;color: #121212;">{{city}}</ion-label>
+        <ion-select style="font-size: 10px;color:#F4F7FA" [(ngModel)]="city" interface="popover">
+          <ion-select-option value="Coimbatore">Coimbatore</ion-select-option>
+          <ion-select-option value="Chennai">Chennai</ion-select-option>
+          <ion-select-option value="Madhurai">Madhurai</ion-select-option>
+          <ion-select-option value="Salam">Salam</ion-select-option>
+          <ion-select-option value="Trichy">Trichy</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
   <div class="container">
     <div class="row ion-text-center">
       <div class="container">
@@ -88,21 +84,20 @@
           <div class="row">
             <div class="col-10 ion-text-left">
               <div class="row">
-                <div class="col-2">
+                <!-- <div class="col-2">
                   <img style="margin: 5px;" src="{{storeLogo}}" height="20px" width="25px" alt="">
-                </div>
-                <div style="margin-left: -5px;" class="col-8">
-                  <p (click)="storeDetails(storeName)" style="font-size: 14px;color: #404040;"><b>{{storeName}}</b>
+                </div> -->
+                <div class="col-9 mx-3 mb-3 mt-1">
+                  <p (click)="storeDetails(storeName)" style="font-size: 18px;color: #404040;"><b>{{storeName}}</b>
 
                   </p>
                 </div>
-                <div *ngIf="productDetails" class="col-5 mt-1 ">
-                  <div *ngIf="deliveryAvilability">
-                    <img style="height:40px;width:65px;margin-left: 45px;"
+                <!-- <div *ngIf="deliveryAvilability" class="col-3 mt-1 ">
+                  <div>
+                    <img style="height:40px;width:65px;margin-left: 5px;"
                       src="https://static.thenounproject.com/png/100245-200.png" alt="">
                   </div>
-                  <!-- <img style="height:40px;width:55px;margin-left: 45px;" src="https://ifthedevilhadmenopause.com/wp-content/uploads/2014/11/delivery.jpg" alt=""> -->
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="col-2 ion-text-right">
@@ -111,32 +106,27 @@
             </div>
 
 
-            <!-- <div *ngIf="productDetails" class="col-3 ion-text-left" style="margin-top: -25px;">
-              <span class="dot ion-text-center"><span style="font-size: 14px;">
-                  <svg style="margin:6px" xmlns="http://www.w3.org/2000/svg" width="20" height="22" fill="currentColor"
-                    class="bi bi-share" viewBox="0 0 16 16">
-                    <path
-                      d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
-                  </svg>
-                </span></span>
-            </div> -->
-
             <!------------- Product details --------------->
             <div *ngIf="productDetails" class="row">
-              <div class="col-6" style="margin-top: -5px;">
-                <img id="product_img" height="75px" width="95px"
-                  style="margin-left:15px;border: 1px solid #ccc;border-radius: 5px;" src="{{productImage}}" alt="">
+              <div class="col-8"></div>
+              <div style="margin-top: -14%;" class="col-4 ion-text-right">
+                <img style="height:35px;width:35px; color: #23d5ab;" src="assets/icon/delivery-bike.png" alt="">
+              </div>
+              <div class="col-6">
+                <img id="product_img" height="75px" width="95px" style="margin-left:5px;border-radius: 5px;"
+                  src="{{productImage}}" alt="">
                 <div class="row">
-                  <div class="col-8">
-                    <p style="color: #404040;margin-left:20px;">{{productName}}</p>
-                  </div>
-                  <div class="col-4">
-                    <ion-badge class="badge ion-text-left" color="light" style="color:#5F5F5F;" slot="start">{{offer}}KG
-                    </ion-badge>
+                  <div class="col-12 ion-text-center mt-3">
+                    <p style="color: #404040;">{{productName}}</p>
                   </div>
                 </div>
               </div>
+
               <div class="col-6">
+                <div>
+                  <ion-badge class="badge ion-text-left" id="kg" slot="start">{{offer}}KG
+                  </ion-badge>
+                </div>
                 <p><span id="offer" style="font-size: smaller;color: #5F5F5F;text-decoration: line-through">
                     <i style="color:#23d5ab" class="fa fa-inr" aria-hidden="true"></i>
                     {{totalPrice}}</span> <span style="margin: 0;padding:0;font-size:15px;">{{offerPrice}}</span></p>
@@ -161,7 +151,7 @@
                   {{offer}}%
                 </p>
 
-                <p id="offer" style="font-size: smaller;">
+                <p id="offer" style="font-size: smaller;margin-left: 8%;">
                   <svg width="20" height="18" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M18.9116 3.42642V1.81135H20.5929V0.22644H15.5488V1.81135H17.2302V3.42642C14.4736 3.62501 12.0001 4.79208 10.1921 6.56606H3.66697V8.15044H8.86504C8.52445 8.65143 8.22897 9.18153 7.98298 9.73587H1.98559V11.3202H7.43614C7.30667 11.8354 7.21773 12.3647 7.1739 12.9057H0.304199V14.4906H7.17384C7.21773 15.0316 7.30662 15.5609 7.43608 16.0755H1.98559V17.6604H7.98298C8.22891 18.2147 8.52445 18.7448 8.86504 19.2453H3.66697V20.8302H10.1921C12.1821 22.7828 14.9784 24 18.0709 24C24.0971 24 28.9999 19.3786 28.9999 13.6981C28.9999 8.28426 24.5466 3.83242 18.9116 3.42642ZM27.2799 14.4906C26.8787 18.666 23.3412 22.0006 18.9116 22.3787V20.8302H17.2302V22.3787C12.8005 22.0006 9.26297 18.666 8.86184 14.4906H10.5046V12.9057H8.86184C9.26297 8.73025 12.8005 5.39566 17.2302 5.01756V6.56606H18.9116V5.01756C23.3412 5.39566 26.8787 8.73025 27.2799 12.9057H25.6371V14.4906H27.2799Z"
@@ -179,7 +169,11 @@
 
           <!--------------- Store Details -------------------->
           <div class="row">
+
             <div *ngIf="storedetailsVisible">
+              <div class="col-12 ion-text-center">
+                <img id="product_img" style="margin: 5px;" src="{{storeLogo}}" height="75px" width="75px" alt="">
+              </div>
               <div class="container">
                 <p>We have served quality products and reliable service @ fair prices</p>
                 <p style="font-size: 12px;">
@@ -195,14 +189,18 @@
                       fill="#F2DA30" />
                     <path d="M4.06543 19.8316L13.8616 16.347L16.5436 19.8316H4.06543Z" fill="#3EA2E5" />
                   </svg>
-                  {{storeAddress}}
+                  15, Ganapathy, Sivasakthi Colony, Ganapathy, Coimbatore, Tamil Nadu 641006
                 </p>
               </div>
 
             </div>
-            <div class="col-12 ion-text-left mt-2">
+            <div class="col-12 ion-text-left mt-2 mb-2">
               <p *ngIf="productDetails" style="font-size:10px;margin-left:5% !important;">
                 Ginger adds flavor to foods and can relieve nausea and irritation and reduce ...</p>
+
+            </div>
+
+            <div class="col-6 mt-2 mb-2">
               <button (click)="showPopup()" *ngIf="storedetailsVisible" class="btn btn-sm report-seller-btn"><svg
                   width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -215,23 +213,10 @@
                 </svg>
                 Report Seller</button>
             </div>
-            <!-- <div class="col-3 ion-text-left" style="margin-top: -6px;">
-              <p>
-                <svg width="32" height="32" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M18.4642 14.4872H13.2813C12.5869 15.5858 11.825 16.6404 11.0001 17.6447C10.1752 16.6404 9.4134 15.5858 8.71901 14.4872H3.53612L1.08398 20.9162H20.9163L18.4642 14.4872Z"
-                    fill="#DFEEF4" />
-                  <path
-                    d="M11.0001 1.08453C9.60022 1.08458 8.2577 1.6407 7.26784 2.63056C6.27798 3.62042 5.72186 4.96294 5.72181 6.36282C5.69088 11.3988 11.0001 17.6447 11.0001 17.6447C11.0001 17.6447 16.3093 11.3988 16.2784 6.36282C16.2783 4.96294 15.7222 3.62042 14.7324 2.63056C13.7425 1.6407 12.4 1.08458 11.0001 1.08453V1.08453ZM11.0001 8.60235C10.5572 8.60235 10.1242 8.471 9.75588 8.22492C9.38759 7.97883 9.10054 7.62907 8.93104 7.21985C8.76153 6.81063 8.71718 6.36033 8.8036 5.9259C8.89001 5.49148 9.1033 5.09243 9.41651 4.77923C9.72971 4.46602 10.1288 4.25273 10.5632 4.16632C10.9976 4.0799 11.4479 4.12425 11.8571 4.29376C12.2663 4.46326 12.6161 4.75031 12.8622 5.1186C13.1083 5.48689 13.2396 5.91988 13.2396 6.36282C13.2397 6.65695 13.1819 6.94822 13.0694 7.21998C12.9569 7.49174 12.7919 7.73867 12.5839 7.94665C12.376 8.15464 12.129 8.3196 11.8573 8.4321C11.5855 8.54461 11.2942 8.60246 11.0001 8.60235V8.60235Z"
-                    fill="#F45858" />
-                  <path
-                    d="M19.0337 15.9775L9.13715 19.4975L5.28027 14.4873H8.71949C9.4137 15.586 10.1754 16.6404 11.0003 17.6447C11.8251 16.6404 12.5868 15.586 13.2811 14.4873H18.4648L19.0337 15.9775Z"
-                    fill="#F2DA30" />
-                  <path d="M5.14941 20.9162L14.9456 17.4316L17.6275 20.9162H5.14941Z" fill="#3EA2E5" />
-                </svg>
-                <span style="text-align: right;">2.2Kms </span>
-              </p>
-            </div> -->
+            <div *ngIf="storedetailsVisible" class="col-6 mt-1">
+              <img style="height:35px;width:35px; color: #23d5ab;" src="assets/icon/delivery-bike.png" alt="">
+            </div>
+
           </div>
 
           <!------------- Social icons ------------------>
@@ -263,7 +248,7 @@
               </div>
               <div class="col-3">
                 <a href="{{whatsApp}}">
-                  <svg style="margin: 10px;" width="30" height="35" viewBox="0 0 40 41" fill="none"
+                  <svg style="margin: 10px;" width="40" height="35" viewBox="0 0 40 41" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M0.854827 40.8334C0.629238 40.8334 0.409779 40.7446 0.247024 40.5807C0.0324696 40.3646 -0.0502871 40.0509 0.0303241 39.7576L2.64207 30.2618C1.01605 27.3342 0.15875 24.0225 0.159976 20.6606C0.164574 9.72772 9.10046 0.833374 20.0801 0.833374C25.4057 0.83551 30.4097 2.90094 34.1709 6.6485C37.9314 10.3964 40.0015 15.3784 40 20.6765C39.9951 31.6097 31.0592 40.5047 20.0801 40.5047C20.0801 40.5047 20.0719 40.5047 20.0716 40.5047C16.8646 40.5035 13.6852 39.7253 10.8543 38.2513L1.07153 40.8056C0.999804 40.8242 0.926856 40.8334 0.854827 40.8334Z"
@@ -340,11 +325,11 @@
         <div *ngIf="offerListVisible" class="row mb-2">
           <div @slideup *ngFor="let offer of offerlist" id="productCard" class="col-6 ion-text-center">
             <div class="row mt-2">
-              <div class="col-4">
-                <img src="assets/storelogo.png" style="margin:1px;" height="19px" width="19px" alt="">
-              </div>
-              <div class="col-8 ion-text-left">
-                <span style="font-size: 11px;color:#404040;margin-left: -17px;"><b>{{offer.store_name}} </b></span>
+              <!-- <div class="col-4">
+                <img src="{{offer.store_logo}}" style="margin:1px;" height="19px" width="19px" alt="">
+              </div> -->
+              <div class="col-12 ion-text-left">
+                <span style="font-size: 14px;color:#404040;"><b>{{offer.store_name}} </b></span>
 
               </div>
               <div (click)="singleCard(offer.tbid)" class="col-9 ion-text-left mt-2">
@@ -407,6 +392,8 @@
       speed="1.5" style="width:100%;margin:3%; margin-top: 15%;" loop autoplay></lottie-player>
   </div>
 
+
+  <!-- <button (click)="testSlide()">Slide</button> -->
 </ion-content>
 
 <!----- Single product details card Pop-Up ----->

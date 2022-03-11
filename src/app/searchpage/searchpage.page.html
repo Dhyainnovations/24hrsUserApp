@@ -33,14 +33,14 @@
 
 
 <div  class="container">
-  <div *ngIf="cardVisible"  class="col-12 card mt-5">
+  <div *ngIf="cardVisible" id="productCard"  class="col-12 card mt-5">
     <div class="row">
       <div class="col-10 ion-text-left">
         <div class="row">
-          <div class="col-2">
-            <img style="margin: 5px;" src="{{storeLogo}}" height="20px" width="25px" alt="">
+          <div class="col-4">
+            <img style="margin: 5px;border-radius: 20%;" src="{{storeLogo}}" height="35px" width="35px" alt="">
           </div>
-          <div style="margin-left: -5px;" class="col-5">
+          <div style="margin-left: -30px;" class="col-8 mt-2">
             <p style="font-size: 18px;color: #404040;"><b>{{storeName }}</b>
             </p>
           </div>
@@ -50,17 +50,18 @@
 
       <div  class="row">
         <div  class="col-6" style="margin-top: -5px;">
-          <img height="75px" width="95px" style="margin-left:15px;border: 1px solid #ccc;border-radius: 5px;" src="{{productImage}}" alt="">
+          <img id="product_img" height="75px" width="95px"  src="{{productImage}}" alt="">
           <div class="row">
-            <div class="col-8">
-              <p style="color: #404040;margin-left:20px;">{{productName}}</p>
+            <div class="col-12">
+              <p style="color: #404040;margin-left:20px;font-size: 12px;">{{productName}}</p>
             </div>
-            <div class="col-4">
-              <ion-badge class="badge ion-text-left" color="light" style="color:#5F5F5F;" slot="start">{{weight}}{{unit}}</ion-badge>
-            </div>
+            
           </div>
         </div>
         <div class="col-6">
+          <div class="mx-2">
+            <ion-badge class="badge ion-text-left"  id="kg" slot="start">{{weight}}{{unit}}</ion-badge>
+          </div>
           <p><span id="offer"
               style="font-size: smaller;color: #5F5F5F;text-decoration: line-through">
               <i style="color:#23d5ab" class="fa fa-inr" aria-hidden="true"></i>
@@ -195,6 +196,10 @@
           </svg>
           </a>
         </div>
+
+        
+
+
       </div>
     </div>
   </div>

@@ -32,18 +32,19 @@
 <div class="container">
   <div *ngFor="let  notification of notificationList" class=" card mt-4">
     <div class="row">
-      <div class="col-8">
+      <div class="col-12">
         <img style="margin: 7px;" height="30px" width="30px" src="{{notification.store_logo}}" alt="">
         <span>{{notification.store_name}}/ {{notification.product}}</span>
       </div>
-      <div class="col-4">
+      <div class="col-8">
+        <p style="font-size:10px;margin:10px;">{{notification.description}}</p>
+      </div>
+      <div class="col-4 ion-text-right">
         <span class="dot ion-text-center"><span style="margin-top:15px;font-size: 14px;">{{notification .offer}}% off</span></span>
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
-        <p style="font-size:10px;margin:10px;">{{notification.description}}</p>
-      </div>
+      
       <div class="col-5">
         <p style="margin:5px;font-size: 10px;">
           <svg width="20" height="18" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">

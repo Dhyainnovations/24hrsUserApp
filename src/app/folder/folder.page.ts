@@ -49,6 +49,7 @@ export class FolderPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.offerList()
     this.start()
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
@@ -58,6 +59,8 @@ export class FolderPage implements OnInit, OnDestroy {
   message = '';
   seconds = 11;
   hour = 1;
+
+  city:any = "coimbatore";
 
   clearTimer() { clearInterval(this.intervalId); }
   start() { this.countDown(); }
@@ -127,7 +130,7 @@ export class FolderPage implements OnInit, OnDestroy {
   }
   //--------------- Ion slide option ----------//
   slideOpts = {
-    slidesPerView: 2.5,
+    slidesPerView: 3,
     coverflowEffect: {
       rotate: 50,
       stretch: 0,
@@ -224,6 +227,7 @@ export class FolderPage implements OnInit, OnDestroy {
 
   //------------- Read one Offer(card) Api call ------------//
   singleCard(tbid) {
+    this.deliveryAvilability = ''
     const o = tbid
     this.isvisible = true;
     this.storedetailsVisible = false
@@ -266,7 +270,7 @@ export class FolderPage implements OnInit, OnDestroy {
       this.storeID = response.records.tbid
       this.deliveryAvilability = response.records.delivery_availability
 
-      if (this.deliveryAvilability == "1" || this.deliveryAvilability == false) {
+      if (this.deliveryAvilability == 1 && this.deliveryAvilability == false && this.deliveryAvilability == "Available" ) {
         this.deliveryAvilability = false
       } else {
         this.deliveryAvilability = true
@@ -314,18 +318,29 @@ export class FolderPage implements OnInit, OnDestroy {
 
   //------------- get offer list -----------//
   offerList() {
-    this.http.get('/list_all_offer',).subscribe((response: any) => {
+    const data = {
+      city:this.city
+    }
+
+    this.http.post('/list_all_offer', data).subscribe((response: any) => {
       this.offerlist = response.records;
       console.log(this.offerlist);
+      if(response.message == "No offers found."){
+        this.noDataFound = true;
+      }else{
+        this.noDataFound = false;
+      }
 
     }, (error: any) => {
       console.log(error);
+      this.noDataFound = true;
     }
     );
   }
 
   //------------- click home slider ----------//
   clickSlideHome() {
+    this.offerlist = []
     this.slideName = "Home";
     this.offerListVisible = true;
     this.noDataFound = false;
@@ -372,5 +387,8 @@ export class FolderPage implements OnInit, OnDestroy {
    this.locationChangeVisible = !this.locationChangeVisible;
   }
  
+  testSlide(){
+    this.router.navigate(['/slide-test'])
+  }
 
 }

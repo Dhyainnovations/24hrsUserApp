@@ -4,6 +4,18 @@ ion-searchbar{
 
 }
 
+#productCard{
+    width: 97% !important;
+}
+#product_img{
+    border:1px solid #FFFFFF;
+    border-radius: 15%;
+    box-shadow:3px 3px 16px 4px #ccc;
+    width: 85px;
+    height:75px;
+    margin: 8px;
+  }
+
 ion-content {
     background-color:#F4F7FA !important;
     // background: linear-gradient(to bottom, #8cdbe2

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,10 +17,8 @@ export class AppComponent {
     // { title: 'Log out', url: '/signinpage', icon:'assets/icon/logout.png' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-
-  constructor( private router: Router,) { }
-
-  
+ 
+  constructor( private router: Router) { }
 
   logout() {
     localStorage.removeItem("24hrs-user-data")
