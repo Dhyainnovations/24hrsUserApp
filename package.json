@@ -1,8 +1,8 @@
 {
-  "name": "userapp",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "24Hrs User App",
+  "version": "9.0",
+  "author": "Dhya Innovations Private Limited",
+  "homepage": "https://dhya.in/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
