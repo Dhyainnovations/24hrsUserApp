@@ -1,4 +1,4 @@
-(self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["polyfills"],{
+(self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["polyfills"],{
 
 /***/ 12626:
 /*!*********************************************************************************!*\

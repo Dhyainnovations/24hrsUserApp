@@ -5,7 +5,7 @@
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  (self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["src_app_selectcategories_selectcategories_module_ts"], {
+  (self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["src_app_selectcategories_selectcategories_module_ts"], {
     /***/
     98089:
     /*!*********************************************************************!*\
@@ -231,12 +231,15 @@
           this.userdetails = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
           this.getCategoryList = [];
           this.selectedCategoryList = [];
+          this.alredySelectedCategoryList = [];
           this.buttonColor = '#000'; //Default Color
 
           route.params.subscribe(function (val) {
             _this.getCategory();
 
-            console.log(_this.selectedCategoryList);
+            _this.selectedCategories();
+
+            console.log(_this.alredySelectedCategoryList);
           });
         }
 
@@ -273,7 +276,7 @@
             this.http.post('/update_store_category', Data).subscribe(function (response) {}, function (error) {
               console.log(error);
             });
-            this.router.navigate(['/homepage']);
+            this.router.navigate(['/myprofile']);
           }
         }, {
           key: "getCategory",
@@ -283,6 +286,18 @@
             console.log(this.selectedCategoryList);
             this.http.get('/list_category').subscribe(function (response) {
               _this2.getCategoryList = response.records;
+            }, function (error) {
+              console.log(error);
+            });
+          }
+        }, {
+          key: "selectedCategories",
+          value: function selectedCategories() {
+            var _this3 = this;
+
+            this.http.get('/store_category').subscribe(function (response) {
+              console.log(response);
+              _this3.alredySelectedCategoryList = response.records;
             }, function (error) {
               console.log(error);
             });
@@ -309,6 +324,159 @@
         template: _raw_loader_selectcategories_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_selectcategories_page_scss__WEBPACK_IMPORTED_MODULE_1__["default"]]
       })], _SelectcategoriesPage);
+      /***/
+    },
+
+    /***/
+    28191:
+    /*!****************************************!*\
+      !*** ./src/app/shared/http.service.ts ***!
+      \****************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "HttpService": function HttpService() {
+          return (
+            /* binding */
+            _HttpService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common/http */
+      91841);
+      /* harmony import */
+
+
+      var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! ../../environments/environment */
+      92340);
+
+      var _HttpService = /*#__PURE__*/function () {
+        function HttpService(http) {
+          _classCallCheck(this, HttpService);
+
+          this.http = http;
+        }
+
+        _createClass(HttpService, [{
+          key: "get",
+          value: function get(serviceName) {
+            var userdetails = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
+            var url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
+            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders() // .set("Access-Control-Allow-Origin", "*")
+            // .set("Access-Control-Allow-Methods", "GET,POST")
+            // .set('Accept','application/json')
+            // .set('Content-Type','application/json')
+            // .set("Access-Control-Allow-Headers", "Token, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+            .set("Token", userdetails.token); //   let httpOptions = {
+            //     headers: new HttpHeaders({
+            //       "Access-Control-Allow-Origin": "*",
+            //       "Access-Control-Allow-Methods": "*",
+            //       "Access-Control-Allow-Headers":"Token, Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+            //       'Authorization':userdetails.token,
+            //       "Content-Type": "application/json"
+            //     })
+            // };
+
+            var options = {
+              headers: header,
+              withCredentials: true
+            };
+            return this.http.get(url, {
+              headers: header
+            });
+          }
+        }, {
+          key: "post",
+          value: function post(serviceName, data) {
+            var token = localStorage.getItem("token");
+            var url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
+
+            if (serviceName == '/user_login' || serviceName == '/user_register') {
+              var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders();
+              var options = {
+                headers: headers,
+                withCredentials: false
+              };
+              return this.http.post(url, JSON.stringify(data), {
+                headers: headers
+              });
+            } else {
+              var _headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders().set("Token", token);
+
+              var _options = {
+                headers: _headers,
+                withCredentials: true
+              };
+              return this.http.post(url, JSON.stringify(data), {
+                headers: _headers
+              });
+            }
+          }
+        }, {
+          key: "postFormData",
+          value: function postFormData(serviceName, data) {
+            var token = localStorage.getItem("token");
+            var url = _environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + serviceName;
+            var headers = {
+              'enctype': 'multipart/form-data;',
+              'Content-Type': 'multipart/form-data;',
+              'Accept': 'plain/text',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+              'Access-Control-Allow-Headers': 'Authorization, Origin, Content-Type, X-CSRF-Token',
+              'Token': token
+            }; // const headers = new HttpHeaders().set("Token", token );
+            //  headers.set('Content-Type', 'multipart/form-data'); 
+
+            var options = {
+              headers: headers,
+              withCredentials: true
+            };
+            return this.http.post(url, data, {
+              headers: headers
+            });
+          }
+        }]);
+
+        return HttpService;
+      }();
+
+      _HttpService.ctorParameters = function () {
+        return [{
+          type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
+        }];
+      };
+
+      _HttpService = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+        providedIn: 'root'
+      })], _HttpService);
       /***/
     },
 
@@ -344,7 +512,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "\n<ion-content class=\"bg-class\" [fullscreen]=\"true\">\n  <div class=\" mt-5\">\n    <p class=\"mt-3 mx-4\" style=\"color:#5C5C5C;font-size: 24px;margin:15px;\">Select preferred categories:</p>\n    <div class=\"container mt-4\">\n      <ion-chip  (click)=\"toggleClass(item)\" [ngClass]=\"{'active': item.active}\" *ngFor=\"let item of getCategoryList\" style=\"color:#23d5ab;background-color: #fffcfa;\">\n        <ion-label >{{ item.category }}</ion-label>\n      </ion-chip>\n    </div>\n\n    <div class=\"col-12 mt-2\" style=\"text-align: right;\">\n      <button (click)=\"verify()\" class=\"btn btn-success btn-sm  myproducts-btn mt-1\">Verify</button>\n    </div>\n\n    <!-- <lottie-player (click)=\"getPicture()\" src=\"https://assets1.lottiefiles.com/packages/lf20_rsqhglyn.json\" background=\"transparent\"\n    speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player> -->\n  </div>\n</ion-content>";
+      __webpack_exports__["default"] = "\n<ion-content class=\"bg-class\" [fullscreen]=\"true\">\n  <div class=\" mt-5\">\n    <p class=\"mt-3 mx-4\" style=\"color:#5C5C5C;font-size: 24px;margin:15px;\">Select preferred categories:</p>\n    <div class=\"container mt-4\">\n      <ion-chip  (click)=\"toggleClass(item)\" [ngClass]=\"{'active': item.active}\" *ngFor=\"let item of getCategoryList\" style=\"color:#23d5ab;background-color: #fffcfa;\">\n        <ion-label >{{ item.category }}</ion-label>\n        <!-- <ion-icon  style=\"color:#121212\" name=\"checkmark-circle-sharp\"></ion-icon> -->\n      </ion-chip>\n    </div>\n\n    <div class=\"col-12 mt-2\" style=\"text-align: right;\">\n      <button (click)=\"verify()\" class=\"btn btn-success btn-sm  myproducts-btn mt-1\">Verify</button>\n    </div>\n\n    <!-- <lottie-player (click)=\"getPicture()\" src=\"https://assets1.lottiefiles.com/packages/lf20_rsqhglyn.json\" background=\"transparent\"\n    speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player> -->\n  </div>\n</ion-content>";
       /***/
     }
   }]);

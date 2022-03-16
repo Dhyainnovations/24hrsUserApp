@@ -1,4 +1,4 @@
-(self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["common"],{
+(self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["common"],{
 
 /***/ 68225:
 /*!*********************************************************************!*\
@@ -544,6 +544,50 @@ Ng2SearchPipeModule.ctorParameters = () => [];
 
 
 //# sourceMappingURL=ng2-search-filter.js.map
+
+/***/ }),
+
+/***/ 10917:
+/*!*******************************************!*\
+  !*** ./src/app/darkmode/theme.service.ts ***!
+  \*******************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ThemeService": function() { return /* binding */ ThemeService; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 64762);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ 38583);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 37716);
+
+
+
+let ThemeService = class ThemeService {
+    constructor(rendererFactory, document) {
+        this.rendererFactory = rendererFactory;
+        this.document = document;
+        this.renderer = this.rendererFactory.createRenderer(null, null);
+    }
+    enableDark() {
+        this.renderer.addClass(this.document.body, 'test');
+    }
+    enableLight() {
+        this.renderer.removeClass(this.document.body, 'test');
+    }
+};
+ThemeService.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.RendererFactory2 },
+    { type: Document, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Inject, args: [_angular_common__WEBPACK_IMPORTED_MODULE_1__.DOCUMENT,] }] }
+];
+ThemeService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.Injectable)({
+        providedIn: 'root'
+    })
+], ThemeService);
+
+
 
 /***/ })
 

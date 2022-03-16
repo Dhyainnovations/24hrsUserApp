@@ -47,7 +47,6 @@ export class MyprofilePage implements OnInit {
     private toastCtrl: ToastController, route: ActivatedRoute, public alertController: AlertController) {
     route.params.subscribe(val => {
       this.PopupModel = false;
-      console.log(this.userdetails);
       this.updateProfile()
       this.getSelectCategory()
 
@@ -55,7 +54,7 @@ export class MyprofilePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.userdetails);
+    this.getSelectCategory()
 
   }
 

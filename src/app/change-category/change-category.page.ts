@@ -13,12 +13,12 @@ export class ChangeCategoryPage implements OnInit {
 
   constructor(private router: Router, private http: HttpService,
     private toastCtrl: ToastController, route: ActivatedRoute) {
-      route.params.subscribe(val => {
-        this.getCategory()
-        this.selectedCategories()
-        console.log(this.alredySelectedCategoryList);
-      });
-     }
+    route.params.subscribe(val => {
+      this.getCategory()
+      this.selectedCategories()
+      console.log(this.alredySelectedCategoryList);
+    });
+  }
 
 
   ngOnInit() {
@@ -26,41 +26,46 @@ export class ChangeCategoryPage implements OnInit {
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
 
-  getCategoryList:any = [];
-  selectedCategoryList:any = []
-  alredySelectedCategoryList:any =[]
+  getCategoryList: any = [];
+  selectedCategoryList: any = []
+  alredySelectedCategoryList: any = []
 
   buttonColor: string = '#000'; //Default Color
-  addEvent(){
+  addEvent() {
     this.buttonColor = '#345465'; //desired Color
-    
+
     /*
     YOUR FUNCTION CODE
     */
-    
-    }
+
+  }
+
+
+  backToPrivious() {
+    this.router.navigate(['/myprofile'])
+  }
 
 
   toggleClass(item) {
     item.active = !item.active;
-    this.selectedCategoryList.push(item.tbid) ;
+    this.selectedCategoryList.push(item.tbid);
     // console.log(item);
     console.log(this.selectedCategoryList);
-    
+
   }
 
 
   verify() {
     const storeCategory = this.selectedCategoryList.toString();
     console.log(storeCategory);
-    
+
     const Data = {
-      tbid : this.userdetails.id,
+      tbid: this.userdetails.id,
       store_category: storeCategory
     }
     console.log(Data);
-    this.http.post('/update_store_category',Data).subscribe((response: any) => {
-     
+    this.http.post('/update_store_category', Data).subscribe((response: any) => {
+
     }, (error: any) => {
       console.log(error);
     });
@@ -77,10 +82,10 @@ export class ChangeCategoryPage implements OnInit {
     });
   }
 
-  selectedCategories(){
+  selectedCategories() {
     this.http.get('/store_category',).subscribe((response: any) => {
       console.log(response);
-      
+
       this.alredySelectedCategoryList = response.records
     }, (error: any) => {
       console.log(error);

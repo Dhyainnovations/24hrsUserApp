@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { ToastController } from '@ionic/angular';
 import {
   trigger,
@@ -38,41 +39,141 @@ import {
   ]
 })
 export class SigninPage implements OnInit {
+  intervalId = 0;
+  message = '';
+  seconds = 0;
+  hour = 0;
+  lat: number;
+  lon: number;
 
-  constructor(private router: Router, private http: HttpService,
+  constructor(private geolocation: Geolocation,private router: Router, private http: HttpService,
     private toastCtrl: ToastController) { }
 
   ngOnInit() {
+    this.MobInputcolSize = 12;
+    this.OtpInputcolSize = 12;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.lat = resp.coords.latitude
+      this.lon = resp.coords.longitude
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+     
+     let watch = this.geolocation.watchPosition();
+     watch.subscribe((data) => {
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+     });
   }
-  loginsts: any = ''
-  signinemailid: any = '';
-  signinpassword: any = '';
+  ngOnDestroy() { this.clearTimer(); }
 
-  signin() {
+  loginsts: any = ''
+  mobileNumber: any = '';
+  otp: any = '';
+  MobInputcolSize: any;
+  OtpInputcolSize:any;
+  sendOtpBtnVisible:any = false;
+  submitBtnVisible:any = false;
+  resendOtpVisible:any = false;
+  timerVisible:any = false
+
+  clearTimer() { clearInterval(this.intervalId); }
+  start() { this.countDown(); }
+  stop() {
+    this.clearTimer();
+    this.message = `$ ${this.hour} {this.seconds} `;
+  }
+
+  private countDown() {
+    this.clearTimer();
+    this.intervalId = window.setInterval(() => {
+      this.seconds -= 1;
+      if (this.seconds === 0) {
+        // this.message = 'Offers Ends..!';
+      } else {
+        if (this.seconds < 0) { this.seconds = 60; } // reset
+        this.message = `${this.hour}. ${this.seconds}s`;
+      }
+    }, 1000);
+  }
+
+  
+
+
+  enterMobile() {
+    this.MobInputcolSize = 8;
+    this.sendOtpBtnVisible = true;
+  }
+  enterOtp(){
+    this.OtpInputcolSize = 8;
+    this.submitBtnVisible = true;
+  }
+
+  sendOtp(){
+    this.seconds = 60;
+    this.MobInputcolSize = 12;
+    this.sendOtpBtnVisible = false;
+    this.resendOtpVisible = true;
+
     const Data = {
-      email_id: this.signinemailid,
-      password: this.signinpassword
+      mobile_number: this.mobileNumber,
+    }
+    console.log(Data);
+    
+      this.http.post('/user_send_otp',Data).subscribe((response: any) => {
+        console.log(response);
+      
+      }, (error: any) => {
+        console.log(error);
+        
+      });
+    
+  }
+
+  ResendOtp(){
+   this.timerVisible = true;
+   this.start()
+ 
+   const Data = {
+      mobile_number: this.mobileNumber,
+    }
+    console.log(Data);
+    
+      this.http.post('/user_send_otp',Data).subscribe((response: any) => {
+        console.log(response);
+      
+      }, (error: any) => {
+        console.log(error);
+        
+      });
+
+  }
+
+  
+
+  signIn() {
+    const Data = {
+      mobile_number: this.mobileNumber,
+      verify_otp: this.otp
     }
 
-    this.http.post('/user_login', Data).subscribe((response: any) => {
-        if (response.success == "true") {
+    this.http.post('/user_verify_otp', Data).subscribe((response: any) => {
+      if (response.success == "true") {
         const obj = {
-          id: response.tbid,
-          username: response.user_name,
           mobile: response.mobile_number,
-          email: response.email_id,
-          token: response.token,
-          loginstatus: response.user_status
+          // token: response.token,
+          // loginstatus: response.user_status
         }
 
-        this.loginsts = response.user_status
+        // this.loginsts = response.user_status
 
         console.log(obj);
 
         const encodeText: any = btoa(JSON.stringify(obj))
         localStorage.setItem("24hrs-user-data", encodeText)
-        localStorage.setItem("token", response.token)
-        localStorage.setItem("loginstatus", response.user_status)
+        // localStorage.setItem("token", response.token)
+        // localStorage.setItem("loginstatus", response.user_status)
 
         const Toast = Swal.mixin({
           toast: true,
@@ -91,7 +192,8 @@ export class SigninPage implements OnInit {
           title: 'Signed in successfully'
         })
 
-        this.navigateTabs()
+        this.router.navigate(['/homepage'])
+        // this.navigateTabs()
       } else {
         const Toast = Swal.mixin({
           toast: true,
@@ -107,7 +209,7 @@ export class SigninPage implements OnInit {
 
         Toast.fire({
           icon: 'error',
-          title: 'Please enter a valid email (or) password'
+          title: 'Invalid Otp, Please try again.'
         })
       }
     }, (error: any) => {
@@ -117,14 +219,12 @@ export class SigninPage implements OnInit {
   }
 
   navigateTabs() {
-    this.signinemailid = '';
-    this.signinpassword = '';
 
     if (this.loginsts == "First Login") {
       console.log(this.loginsts);
       console.log("1st");
       this.router.navigate(['/selectcategories'])
-    } else{
+    } else {
       console.log("2nd");
       this.router.navigate(['/homepage'])
     }
@@ -133,5 +233,11 @@ export class SigninPage implements OnInit {
   signupPage() {
     this.router.navigate(['/signuppage'])
   }
+
+
+  signin(){
+    this.router.navigate(['/homepage'])
+  }
+
 
 }

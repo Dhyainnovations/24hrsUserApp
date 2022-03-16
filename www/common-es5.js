@@ -11,7 +11,7 @@
 
   function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-  (self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["common"], {
+  (self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["common"], {
     /***/
     68225:
     /*!*********************************************************************!*\
@@ -895,6 +895,92 @@
 
       /***/
 
+    },
+
+    /***/
+    10917:
+    /*!*******************************************!*\
+      !*** ./src/app/darkmode/theme.service.ts ***!
+      \*******************************************/
+
+    /***/
+    function _(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export */
+
+
+      __webpack_require__.d(__webpack_exports__, {
+        /* harmony export */
+        "ThemeService": function ThemeService() {
+          return (
+            /* binding */
+            _ThemeService
+          );
+        }
+        /* harmony export */
+
+      });
+      /* harmony import */
+
+
+      var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! tslib */
+      64762);
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! @angular/common */
+      38583);
+      /* harmony import */
+
+
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      37716);
+
+      var _ThemeService = /*#__PURE__*/function () {
+        function ThemeService(rendererFactory, document) {
+          _classCallCheck(this, ThemeService);
+
+          this.rendererFactory = rendererFactory;
+          this.document = document;
+          this.renderer = this.rendererFactory.createRenderer(null, null);
+        }
+
+        _createClass(ThemeService, [{
+          key: "enableDark",
+          value: function enableDark() {
+            this.renderer.addClass(this.document.body, 'test');
+          }
+        }, {
+          key: "enableLight",
+          value: function enableLight() {
+            this.renderer.removeClass(this.document.body, 'test');
+          }
+        }]);
+
+        return ThemeService;
+      }();
+
+      _ThemeService.ctorParameters = function () {
+        return [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.RendererFactory2
+        }, {
+          type: Document,
+          decorators: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Inject,
+            args: [_angular_common__WEBPACK_IMPORTED_MODULE_1__.DOCUMENT]
+          }]
+        }];
+      };
+
+      _ThemeService = (0, tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injectable)({
+        providedIn: 'root'
+      })], _ThemeService);
+      /***/
     }
   }]);
 })();

@@ -7,12 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
 @NgModule({
   declarations: [AppComponent,],
   entryComponents: [],
   imports: [HttpClientModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule,BrowserAnimationsModule,FormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  providers: [LocalNotifications,Geolocation,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   
  ],
   bootstrap: [AppComponent],

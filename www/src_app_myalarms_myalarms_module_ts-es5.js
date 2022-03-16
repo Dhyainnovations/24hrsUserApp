@@ -5,7 +5,7 @@
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  (self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["src_app_myalarms_myalarms_module_ts"], {
+  (self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["src_app_myalarms_myalarms_module_ts"], {
     /***/
     5858:
     /*!*****************************************************!*\
@@ -246,57 +246,68 @@
           this.toastCtrl = toastCtrl;
           this.alertController = alertController;
           this.isVisible = false;
-          this.alarmList = [];
+          this.storeAlarmList = [];
+          this.productAlarmList = [];
+          this.storeAlram = false;
           route.params.subscribe(function (val) {
-            _this.getAlarmList();
+            // this.getAlarmList()
+            _this.getStoreAlarmList();
+
+            _this.getproductAlarmList();
           });
         }
 
         _createClass(MyalarmsPage, [{
           key: "ngOnInit",
-          value: function ngOnInit() {}
+          value: function ngOnInit() {} //-------------- Navigate to searchpage ----------//
+
         }, {
           key: "searchPage",
           value: function searchPage() {
             this.router.navigate(['/searchpage']);
-          }
+          } //-------------- Navigate to notificationpage  ----------//
+
         }, {
           key: "notification",
           value: function notification() {
             this.router.navigate(['/notification']);
-          }
+          } //-------------- Navigate to setalarmpage  ----------//
+
         }, {
           key: "newAlarm",
           value: function newAlarm() {
             this.router.navigate(['/setalarm']);
-          }
+          } //-------------- Get alarm List Api func  ----------//
+
         }, {
           key: "getAlarmList",
           value: function getAlarmList() {
-            var _this2 = this;
-
-            this.http.get('/list_all_alarm').subscribe(function (response) {
-              _this2.alarmList = response.records;
-              console.log(response); // if(response.success == "false"){
-              //   this.isVisible = true;
-              // }else{
-              //   this.alarmList = response.records
-              // }
-            }, function (error) {
+            this.http.get('/list_all_alarm').subscribe(function (response) {}, function (error) {
               console.log(error);
             });
-          }
+          } //---------- Delete storeAlarm ------------//
+
         }, {
-          key: "deleteAlarm",
-          value: function deleteAlarm(value) {
+          key: "deleteStoreAlarm",
+          value: function deleteStoreAlarm(value) {
+            this.storeAlram = true;
             this.tbid = value;
             this.presentAlertConfirm();
-          }
+          } //---------- Delete productAlarm ------------//
+
+        }, {
+          key: "deleteProductAlarm",
+          value: function deleteProductAlarm(value) {
+            this.storeAlram = false;
+            this.tbid = value;
+            this.presentAlertConfirm();
+          } //------------- Alart confirmation popup -----------//
+
         }, {
           key: "presentAlertConfirm",
           value: function presentAlertConfirm() {
             return (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__awaiter)(this, void 0, void 0, /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var _this3 = this;
+              var _this2 = this;
 
               var alert;
               return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -320,18 +331,34 @@
                           handler: function handler() {
                             console.log('Confirm Okay');
                             var obj = {
-                              tbid: _this3.tbid
+                              tbid: _this2.tbid
                             };
                             console.log(obj);
 
-                            _this3.http.post('/delete_store_alarm', obj).subscribe(function (response) {
-                              console.log(response);
+                            if (_this2.storeAlram == true) {
+                              _this2.http.post('/delete_store_alarm', obj).subscribe(function (response) {
+                                console.log(response);
 
-                              if (response.success == "true") {
-                                var encodeText = btoa(JSON.stringify(obj));
-                                localStorage.setItem("24hrs-user-data", encodeText);
-                                localStorage.setItem("token", response.token);
-                                localStorage.setItem("loginstatus", response.user_status);
+                                if (response.success == "true") {
+                                  var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                    timerProgressBar: true,
+                                    didOpen: function didOpen(toast) {
+                                      toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer);
+                                      toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer);
+                                    }
+                                  });
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: 'Alarm Deleted successfully'
+                                  });
+
+                                  _this2.getStoreAlarmList();
+                                }
+                              }, function (error) {
                                 var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
                                   toast: true,
                                   position: 'top-end',
@@ -344,28 +371,53 @@
                                   }
                                 });
                                 Toast.fire({
-                                  icon: 'success',
-                                  title: 'Alarm Deleted successfully'
+                                  icon: 'error',
+                                  title: 'Something Went Wrong'
                                 });
-                              }
-                            }, function (error) {
-                              var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 1000,
-                                timerProgressBar: true,
-                                didOpen: function didOpen(toast) {
-                                  toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer);
-                                  toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer);
+                                console.log(error);
+                              });
+                            } else {
+                              _this2.http.post('/delete_alarm_product', obj).subscribe(function (response) {
+                                console.log(response);
+
+                                if (response.success == "true") {
+                                  var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 1000,
+                                    timerProgressBar: true,
+                                    didOpen: function didOpen(toast) {
+                                      toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer);
+                                      toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer);
+                                    }
+                                  });
+                                  Toast.fire({
+                                    icon: 'success',
+                                    title: 'Alarm Deleted successfully'
+                                  });
+
+                                  _this2.getproductAlarmList();
                                 }
+                              }, function (error) {
+                                var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
+                                  toast: true,
+                                  position: 'top-end',
+                                  showConfirmButton: false,
+                                  timer: 1000,
+                                  timerProgressBar: true,
+                                  didOpen: function didOpen(toast) {
+                                    toast.addEventListener('mouseenter', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer);
+                                    toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer);
+                                  }
+                                });
+                                Toast.fire({
+                                  icon: 'error',
+                                  title: 'Something Went Wrong'
+                                });
+                                console.log(error);
                               });
-                              Toast.fire({
-                                icon: 'error',
-                                title: 'Something Went Wrong'
-                              });
-                              console.log(error);
-                            });
+                            }
                           }
                         }]
                       });
@@ -382,6 +434,32 @@
                 }
               }, _callee, this);
             }));
+          } //------------- Get StoreAlarmList -----------//
+
+        }, {
+          key: "getStoreAlarmList",
+          value: function getStoreAlarmList() {
+            var _this3 = this;
+
+            this.http.get('/store_read_alarm').subscribe(function (response) {
+              _this3.storeAlarmList = response.records;
+              console.log(response);
+            }, function (error) {
+              console.log(error);
+            });
+          } //------------- Get ProductAlarmList -----------//
+
+        }, {
+          key: "getproductAlarmList",
+          value: function getproductAlarmList() {
+            var _this4 = this;
+
+            this.http.get('/product_read_alarm').subscribe(function (response) {
+              _this4.productAlarmList = response.records;
+              console.log(response);
+            }, function (error) {
+              console.log(error);
+            });
           }
         }]);
 
@@ -405,6 +483,7 @@
       _MyalarmsPage = (0, tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0, _angular_core__WEBPACK_IMPORTED_MODULE_7__.Component)({
         selector: 'app-myalarms',
         template: _raw_loader_myalarms_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        //------------- Animations ----------//
         animations: [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.trigger)('fadein', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.state)('void', (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
           opacity: 0
         })), (0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.transition)('void => *', [(0, _angular_animations__WEBPACK_IMPORTED_MODULE_8__.style)({
@@ -461,7 +540,7 @@
       /* harmony default export */
 
 
-      __webpack_exports__["default"] = "<ion-header>\n  <ion-toolbar class=\"new-background-color\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button style=\"margin-top:15px;color:#fff\" autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n\n    <div class=\"row\">\n      <div class=\"col-4\">\n        <h5 style=\"color:#fff;margin-top:30px\">24HRS</h5>\n      </div>\n      <div class=\"col-8\" style=\"text-align: right;width: 90%;margin-top: -40px;\">\n        <svg  (click)=\"searchPage()\" style=\"margin:10px;\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\">\n          <path\n            d=\"M14.2998 12.5863H13.3974L13.0775 12.2779C14.3299 10.8187 14.9685 8.93097 14.8587 7.01111C14.749 5.09124 13.8996 3.28856 12.489 1.98152C11.0785 0.674474 9.21659 -0.0352438 7.29394 0.00134777C5.3713 0.0379394 3.53754 0.817948 2.17778 2.17771C0.818015 3.53748 0.0379393 5.37125 0.00134789 7.2939C-0.0352436 9.21655 0.674402 11.0786 1.98144 12.4891C3.28848 13.8996 5.09129 14.7489 7.01115 14.8586C8.93101 14.9683 10.8187 14.33 12.2779 13.0775L12.5864 13.3974V14.2998L18.298 20L20 18.298L14.2998 12.5863ZM7.44594 12.5863C6.42926 12.5863 5.43548 12.2849 4.59014 11.72C3.7448 11.1552 3.08585 10.3523 2.69678 9.41302C2.30772 8.47373 2.20589 7.44016 2.40423 6.44301C2.60258 5.44586 3.09231 4.52992 3.81121 3.81102C4.53011 3.09211 5.44592 2.60259 6.44306 2.40424C7.44021 2.20589 8.47391 2.30765 9.4132 2.69672C10.3525 3.08579 11.1553 3.74468 11.7201 4.59002C12.285 5.43536 12.5864 6.42921 12.5864 7.44589C12.5873 8.1212 12.4551 8.79006 12.197 9.41414C11.939 10.0382 11.5604 10.6052 11.0829 11.0827C10.6054 11.5602 10.0381 11.9389 9.41404 12.1969C8.78996 12.4549 8.12124 12.5872 7.44594 12.5863Z\"\n            fill=\"white\" />\n        </svg>\n        <svg (click)=\"notification()\" style=\"margin:10px;\" width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\">\n          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\"\n            d=\"M8.0002 0C7.11654 0 6.4002 0.716344 6.4002 1.6V1.80156C3.63963 2.51189 1.5998 5.01775 1.5998 8.00003V13.6H2C0.895431 13.6 0 14.4955 0 15.6V15.8C0 16.3523 0.447715 16.8 1 16.8H15C15.5523 16.8 16 16.3523 16 15.8V15.6C16 14.4955 15.1046 13.6 14 13.6H14.3998V8.00003C14.3998 5.01803 12.3604 2.51237 9.60019 1.80176V1.6C9.60019 0.716344 8.88385 0 8.0002 0ZM5.5998 17.6C5.5998 18.9255 6.67432 20 7.9998 20C9.32529 20 10.3998 18.9255 10.3998 17.6H5.5998Z\"\n            fill=\"white\" />\n        </svg>\n       \n      </div>\n    </div>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content >\n  <div class=\"container\">\n    <div class=\"row\">\n      <div @slidelefttitle class=\"col-6\">\n        <h3>My Alarms:</h3>\n      </div>\n      <div @slidelefttitle class=\"col-6 ion-text-right\">\n        <button (click)=\"newAlarm()\" class=\"btn btn-sm btn-set-new-alarm\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-plus-circle\" viewBox=\"0 0 16 16\">\n            <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\"/>\n            <path d=\"M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z\"/>\n          </svg>\n          New Alarm</button>\n      </div>\n    </div>\n    \n    <div *ngIf=\"isVisible\">\n      <lottie-player src=\"https://assets9.lottiefiles.com/private_files/lf30_bn5winlb.json\" background=\"transparent\"\n        speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player>\n    </div>\n\n\n    <div *ngFor=\"let alarm of alarmList\" @slidelefttitle class=\" card mt-4\">\n      <div class=\"row\">\n        <div class=\"col-9\">\n          <img style=\"margin: 7px;\" height=\"30px\" width=\"30px\" src=\"assets/onion.PNG\" alt=\"\">\n          <span>{{alarm.store_name}}/</span> <span> {{alarm.product}}</span>\n        </div>\n        <div class=\"col-3 mt-2\">\n          <span class=\"dot ion-text-center\"><span style=\"margin-top:15px;font-size: 14px;\">\n            <svg (click)=\"deleteAlarm(alarm.tbid)\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-trash\" viewBox=\"0 0 16 16\">\n              <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z\"/>\n              <path fill-rule=\"evenodd\" d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z\"/>\n            </svg>\n          </span></span>\n        </div>\n      </div>\n    </div>\n  </div>\n  </ion-content>\n  \n";
+      __webpack_exports__["default"] = "<!------------ Header  ---------------->\n<ion-header style=\"margin-top: -7px;\">\n  <ion-toolbar class=\"new-background-color\">\n    <ion-buttons slot=\"start\">\n      <ion-menu-button style=\"margin-top:15px;color:#fff\" autoHide=\"false\"></ion-menu-button>\n    </ion-buttons>\n\n    <div class=\"row\">\n      <div class=\"col-4\">\n        <h5 style=\"color:#fff;margin-top:30px\">24HRS</h5>\n      </div>\n      <div class=\"col-8\" style=\"text-align: right;width: 90%;margin-top: -40px;\">\n        <svg (click)=\"searchPage()\" style=\"margin:10px;\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\">\n          <path\n            d=\"M14.2998 12.5863H13.3974L13.0775 12.2779C14.3299 10.8187 14.9685 8.93097 14.8587 7.01111C14.749 5.09124 13.8996 3.28856 12.489 1.98152C11.0785 0.674474 9.21659 -0.0352438 7.29394 0.00134777C5.3713 0.0379394 3.53754 0.817948 2.17778 2.17771C0.818015 3.53748 0.0379393 5.37125 0.00134789 7.2939C-0.0352436 9.21655 0.674402 11.0786 1.98144 12.4891C3.28848 13.8996 5.09129 14.7489 7.01115 14.8586C8.93101 14.9683 10.8187 14.33 12.2779 13.0775L12.5864 13.3974V14.2998L18.298 20L20 18.298L14.2998 12.5863ZM7.44594 12.5863C6.42926 12.5863 5.43548 12.2849 4.59014 11.72C3.7448 11.1552 3.08585 10.3523 2.69678 9.41302C2.30772 8.47373 2.20589 7.44016 2.40423 6.44301C2.60258 5.44586 3.09231 4.52992 3.81121 3.81102C4.53011 3.09211 5.44592 2.60259 6.44306 2.40424C7.44021 2.20589 8.47391 2.30765 9.4132 2.69672C10.3525 3.08579 11.1553 3.74468 11.7201 4.59002C12.285 5.43536 12.5864 6.42921 12.5864 7.44589C12.5873 8.1212 12.4551 8.79006 12.197 9.41414C11.939 10.0382 11.5604 10.6052 11.0829 11.0827C10.6054 11.5602 10.0381 11.9389 9.41404 12.1969C8.78996 12.4549 8.12124 12.5872 7.44594 12.5863Z\"\n            fill=\"white\" />\n        </svg>\n        <svg (click)=\"notification()\" style=\"margin:10px;\" width=\"16\" height=\"20\" viewBox=\"0 0 16 20\" fill=\"none\"\n          xmlns=\"http://www.w3.org/2000/svg\">\n          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\"\n            d=\"M8.0002 0C7.11654 0 6.4002 0.716344 6.4002 1.6V1.80156C3.63963 2.51189 1.5998 5.01775 1.5998 8.00003V13.6H2C0.895431 13.6 0 14.4955 0 15.6V15.8C0 16.3523 0.447715 16.8 1 16.8H15C15.5523 16.8 16 16.3523 16 15.8V15.6C16 14.4955 15.1046 13.6 14 13.6H14.3998V8.00003C14.3998 5.01803 12.3604 2.51237 9.60019 1.80176V1.6C9.60019 0.716344 8.88385 0 8.0002 0ZM5.5998 17.6C5.5998 18.9255 6.67432 20 7.9998 20C9.32529 20 10.3998 18.9255 10.3998 17.6H5.5998Z\"\n            fill=\"white\" />\n        </svg>\n\n      </div>\n    </div>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-6\">\n        <h3>My Alarms:</h3>\n      </div>\n      <div class=\"col-6 ion-text-right\">\n        <button (click)=\"newAlarm()\" class=\"btn btn-sm btn-set-new-alarm\">\n          <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-plus-circle\"\n            viewBox=\"0 0 16 16\">\n            <path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\" />\n            <path\n              d=\"M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z\" />\n          </svg>\n          New Alarm</button>\n      </div>\n    </div>\n\n    <!---------- No data Gif ------------>\n    <div *ngIf=\"isVisible\">\n      <lottie-player src=\"https://assets9.lottiefiles.com/private_files/lf30_bn5winlb.json\" background=\"transparent\"\n        speed=\"1.5\" style=\"width:100%;margin-left:0px;\" loop autoplay></lottie-player>\n    </div>\n\n    <!-- <h4 @slidelefttitle>Store Alarms:</h4> -->\n    <!--------- store alarms ---------->\n    <div *ngFor=\"let alarm of storeAlarmList\" class=\" card mt-4\">\n      <div class=\"row\">\n        <div class=\"col-10\">\n          <img style=\"margin: 7px;\" height=\"30px\" width=\"30px\" src=\"assets/onion.PNG\" alt=\"\">\n          <span>{{alarm.store_name}}</span>\n        </div>\n        <div class=\"col-2 mt-2\">\n          <span style=\"margin-left: -5px;\" class=\"dot ion-text-center\"><span style=\"margin-top:15px;font-size: 14px;\">\n              <svg (click)=\"deleteStoreAlarm(alarm.tbid)\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"\n                fill=\"currentColor\" class=\"bi bi-trash\" viewBox=\"0 0 16 16\">\n                <path\n                  d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z\" />\n                <path fill-rule=\"evenodd\"\n                  d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z\" />\n              </svg>\n            </span></span>\n        </div>\n      </div>\n    </div>\n\n\n    <!-- <h4 @slidelefttitle>Product Alarms:</h4> -->\n    <!------------ product alarms ------------>\n\n    <div *ngFor=\"let alarm of productAlarmList\" class=\" card mt-4\">\n      <div class=\"row\">\n        <div class=\"col-10\">\n          <img style=\"margin: 7px;\" height=\"30px\" width=\"30px\" src=\"assets/onion.PNG\" alt=\"\">\n          <span style=\"font-size: 14px;\">{{alarm.store_name}}/</span> <span style=\"font-size: 12px;\">\n            {{alarm.product}}</span>\n        </div>\n        <div class=\"col-2 mt-2\">\n          <span style=\"margin-left: -5px;\" class=\"dot ion-text-center\"><span style=\"margin-top:15px;font-size: 14px;\">\n              <svg (click)=\"deleteProductAlarm(alarm.tbid)\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"\n                fill=\"currentColor\" class=\"bi bi-trash\" viewBox=\"0 0 16 16\">\n                <path\n                  d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z\" />\n                <path fill-rule=\"evenodd\"\n                  d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z\" />\n              </svg>\n            </span></span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</ion-content>";
       /***/
     }
   }]);

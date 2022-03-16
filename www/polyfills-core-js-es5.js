@@ -1,5 +1,5 @@
 (function () {
-  (self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["polyfills-core-js"], {
+  (self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["polyfills-core-js"], {
     /***/
     47656:
     /*!****************************************************************!*\

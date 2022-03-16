@@ -1530,3 +1530,11 @@ svg {
 ion-toolbar {
   --height: 62px !important;
 }
+#kg {
+  background: linear-gradient(to left, #23a6d5 0%, #23d5ab 100%);
+  color: #fff;
+  margin-left: -15px !important;
+  border-radius: 3px !important;
+  font-size: 10px !important;
+  margin-top: 4px;
+}

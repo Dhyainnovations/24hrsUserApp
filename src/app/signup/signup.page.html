@@ -1,8 +1,7 @@
-<ion-content class="bg-class">
-  <div class="container">
 
-    <div class="signin-div" style="margin-top: -40px;">
 
+<ion-content class="mt-2">
+  <div class="myproduct-div mt-5 ">
     <div class="row">
       <div class="col-7">
         <ion-icon (click)="navigateHome()" style="margin:20px;cursor:pointer;color:#23d5ab" name="close"></ion-icon>
@@ -15,82 +14,66 @@
       </div>
 
     </div>
-      <div class="row ">
-        <div class="col-7">
-          <p class="get-started mt-2"><b>Getting Started</b></p>
-          <p class="create-account">Create an account to continue!</p>
-        </div>
-        <div class="col-5 ion-text-center">
-          <img id="logo" style="margin-top: 10px;" height="90px" width="95px" src="assets/logo.jpeg" alt="">
-        </div>
+    <p class="get-started mt-2 mx-3"><b>Getting Started</b></p>
 
+  
+
+
+
+    <div class="row ion-text-center">
+      <div class="col-4">
+        <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ultyaniw.json" background="transparent"
+          speed="1.5" style="width:60%;margin-left: 15px;" autoplay></lottie-player>
       </div>
-      <div class="input-field">
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="mail"></ion-icon> EMAIL
-          </ion-label>
-          <ion-input required (keyup)="isEmail()" [(ngModel)]="emailid" class="pt-2"></ion-input>
-          <p *ngIf="isNotEmailAlert" style="color:red;font-size: 10px"> Incorrect Email Address </p>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="person"></ion-icon> STORE NAME
-          </ion-label>
-          <ion-input required [(ngModel)]="sellername" class="pt-2"></ion-input>
-          <p *ngIf="isUserNameAlert" style="color:red;font-size: 10px"> Incorrect User name </p>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="call"></ion-icon>MOBILE NUMBER
-          </ion-label>
-          <ion-input (keyup)="mobileNumVerification()" required [(ngModel)]="mobilenumber" type="text" maxlength="10"
-            class="pt-3"></ion-input>
-
-        </ion-item>
-        <p style="color:red;font-size: 10px;" class="p-2" *ngIf="ValidNumber"> Enter Valid Mobile Number </p>
-
-
-
-        <ion-item>
-          <ion-label position="floating"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-              fill="currentColor" class="bi bi-file-lock2-fill" viewBox="0 0 16 16">
-              <path d="M7 6a1 1 0 0 1 2 0v1H7V6z" />
-              <path
-                d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 6v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V8.3c0-.627.46-1.058 1-1.224V6a2 2 0 1 1 4 0z" />
-            </svg> PASSWORD</ion-label>
-          <ion-input required [(ngModel)]="password" (keyup)="passwordValidation(password)" class="pt-1"> </ion-input>
-          <p *ngIf="pwLowercaseAlert" style="color:red;font-size: 10px;"> A <b>lowercase</b> letter </p>
-          <p *ngIf="pwUppercaseAlert" style="color:red;font-size: 10px;"> A <b>capital (uppercase)</b> lette</p>
-          <p *ngIf="pwNumberAlert" style="color:red;font-size: 10px;"> A <b>number</b> </p>
-          <p *ngIf="pwMinimumAlert" style="color:red;font-size: 10px;">Minimum <b>8 characters</b> </p>
-          <p *ngIf="invalidAlert" style="color:red;font-size: 10px;"><b>Invalid</b> </p>
-        </ion-item>
+      <div class="col-8">
+        <input type="text" id="edit-field" placeholder="Username" [(ngModel)]="userName" maxlength="10">
       </div>
+    </div>
 
-      <div class="row">
-
-        <div class="col-1 tearmsAndCondition" style="margin-left: 14px;">
-          <ion-checkbox (ionChange)="checkboxClick($event)" color="success" [checked]="checked" [routerLink]="['/terms-and-condition']" [queryParams]="{ checkbox: true}"></ion-checkbox>
-        </div>
-        <div class="col-8">
-          <p *ngIf="acceptCondtion" style="color:red;font-size: 10px;padding-top: 8px;"><b>First, Agree To Terms &
-              Conditions</b> </p>
-          <p class="tearmsAndCondition" (click)="termsAndCondition()">By creating an account, you agree to our
-            <b> Terms & Conditions</b>
-          </p>
-        </div>
+    <div class="row">
+      <div class="col-4">
+        <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_uz8b4wzt.json" background="transparent"
+          speed="1.5" style="width:65%;margin-left: 15px;" autoplay></lottie-player>
       </div>
-
-      <div style="width:100%; text-align: center;">
-        <button (click)="signup()" type="button" class="btn btn-primary  signup-btn mt-2">SIGN UP </button>
+      <div class="col-8">
+        <input disabled type="text" id="edit-field" placeholder="Mobile number" [(ngModel)]="mobileNumber">
+        <p class="small text-danger" *ngIf="youtubeurlCheck"><i>Kindly Enter Correct Youtube Url</i></p>
       </div>
-      <p style="cursor: pointer;" (click)="signinPage()" class="condition ion-text-center">Already have an account? <b
-          style="color:#23d5ab"> Sign in</b></p>
-
-
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <lottie-player src="https://assets6.lottiefiles.com/datafiles/uihIaQIvWBfYL9a/data.json" background="transparent"
+          speed="1.5" style="width:100%;" autoplay></lottie-player>
+      </div>
+      <div class="col-8">
+        <div class="select">
+          <select ngModel name="subcategory">
+            <option value="" disabled selected>Location</option>
+            <option *ngFor="let subcat of subcategoryList" value="{{subcat.tbid}}">
+              {{subcat.subsubcategory}}
+            </option>
+            <option disabled *ngIf="subCategoryNotfound">No Sub Category Found</option>
+            <option value="1">Coimbatore</option>
+            <option value="1">Chennai</option>
+            <option value="1">Madhurai</option>
+            <option value="1">Salem</option>
+          
+          </select>
+        </div> 
+      </div>
+    </div>
+    
+   
+    <div class="row ">
+      <div class="col-7">
+        <button (click)="navigateHome()" type="button" class="btn btn-success btn-sm skip-btn">Skip</button>
+      </div>
+      <div class="col-5">
+        <button (click)="sellerContact()" type="button" class="btn btn-success btn-sm update-btn">Next</button>
+      </div>
     </div>
   </div>
+
+
+  
 </ion-content>

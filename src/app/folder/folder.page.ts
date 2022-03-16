@@ -45,6 +45,7 @@ export class FolderPage implements OnInit, OnDestroy {
     route.params.subscribe(val => {
       this.getSelectCategory()
       this.offerList()
+      this.locationList()
     });
   }
 
@@ -56,7 +57,7 @@ export class FolderPage implements OnInit, OnDestroy {
   ngOnDestroy() { this.clearTimer(); }
 
   intervalId = 0;
-  message = '';
+  Counter = '';
   seconds = 11;
   hour = 1;
 
@@ -66,7 +67,7 @@ export class FolderPage implements OnInit, OnDestroy {
   start() { this.countDown(); }
   stop() {
     this.clearTimer();
-    this.message = `$ ${this.hour} {this.seconds} `;
+    this.Counter = `$ ${this.hour} {this.seconds} `;
   }
 
   private countDown() {
@@ -74,10 +75,10 @@ export class FolderPage implements OnInit, OnDestroy {
     this.intervalId = window.setInterval(() => {
       this.seconds -= 1;
       if (this.seconds === 0) {
-        this.message = 'Offers Ends..!';
+        this.Counter = 'Offers Ends..!';
       } else {
         if (this.seconds < 0) { this.seconds = 60; } // reset
-        this.message = `${this.hour}. ${this.seconds} Hrs`;
+        this.Counter = `${this.hour}. ${this.seconds} Hrs`;
       }
     }, 1000);
   }
@@ -119,7 +120,7 @@ export class FolderPage implements OnInit, OnDestroy {
   store: any;
   offer_denied: any;
   locationChangeVisible:any = false;
-
+  unit:any;
 
   hidepopup() {
     this.popUpisvisible = false;
@@ -243,7 +244,8 @@ export class FolderPage implements OnInit, OnDestroy {
         this.offer = response.records.offer
         this.totalPrice = response.records.total_cost
         this.offerPrice = response.records.offer_price
-        this.offerTime = response.records.offer_time
+        this.offerTime = response.records.offer_time,
+        this.unit = response.records.product_unit
       }
 
     }, (error: any) => {
@@ -361,7 +363,9 @@ export class FolderPage implements OnInit, OnDestroy {
     }
 
     const obj = {
-      store_category: item
+      store_category: item,
+      city:this.city
+
     }
     this.http.post('/list_offer_category', obj).subscribe((response: any) => {
       if (response.success == "true") {
@@ -381,6 +385,18 @@ export class FolderPage implements OnInit, OnDestroy {
     );
   }
 
+  locationsList:any = []
+  locationList() {
+   
+    this.http.get('/list_location',).subscribe((response: any) => {
+      console.log(response);
+      this.locationsList = response.records
+      console.log(response.records.city);
+      
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
 
 
   locationChange(){

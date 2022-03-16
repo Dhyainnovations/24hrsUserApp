@@ -5,7 +5,7 @@
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  (self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["src_app_splashscreen_splashscreen_module_ts"], {
+  (self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["src_app_splashscreen_splashscreen_module_ts"], {
     /***/
     53860:
     /*!*************************************************************!*\
@@ -215,9 +215,7 @@
 
           this.router = router;
           route.params.subscribe(function (val) {
-            console.log(localStorage.getItem("24hrs-user-data"));
             var userdetails = localStorage.getItem("24hrs-user-data");
-            console.log(userdetails);
             setTimeout(function () {
               if (userdetails) {
                 _this.router.navigate(['/homepage']);

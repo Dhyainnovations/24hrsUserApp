@@ -1,4 +1,4 @@
-(self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["src_app_splashscreen_splashscreen_module_ts"],{
+(self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["src_app_splashscreen_splashscreen_module_ts"],{
 
 /***/ 53860:
 /*!*************************************************************!*\
@@ -107,9 +107,7 @@ let SplashscreenPage = class SplashscreenPage {
     constructor(router, route) {
         this.router = router;
         route.params.subscribe(val => {
-            console.log(localStorage.getItem("24hrs-user-data"));
             var userdetails = (localStorage.getItem("24hrs-user-data"));
-            console.log(userdetails);
             setTimeout(() => {
                 if (userdetails) {
                     this.router.navigate(['/homepage']);

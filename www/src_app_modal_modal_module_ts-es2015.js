@@ -1,4 +1,4 @@
-(self["webpackChunkuserapp"] = self["webpackChunkuserapp"] || []).push([["src_app_modal_modal_module_ts"],{
+(self["webpackChunk_24HrsUserApp"] = self["webpackChunk_24HrsUserApp"] || []).push([["src_app_modal_modal_module_ts"],{
 
 /***/ 79130:
 /*!***********************************************!*\

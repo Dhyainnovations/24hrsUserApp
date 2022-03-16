@@ -1,85 +1,104 @@
-.location{
-    color:#171717;
-    font-size: 12px;
+.get-started {
+    font-size: 20px;
+    color    : #4d4848;
+    margin   : 8px;
+}
+
+.myproduct-div{
+    position: absolute;
+    top:18%;
+    background-color: #fff;
+    border:1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 2px #ebe6e6;
+    width:96% !important;
     margin:5px;
- }
- .get-started{
- font-size: 20px;
- color: #171717;
- margin:8px;
- }
- .create-account{
- font-size: 10px;
- margin:8px;
- }
- .tearmsAndCondition{
-     font-size:10px;
-     margin:5px;
-     cursor: pointer;
- }
- // .input-field{
- //     margin-left :-10px;
     
- // }
- .signup-btn{
-     border-radius: 5px !important;
-     width: 50%;
-     height:35px;
-     background: linear-gradient(to left, #23a6d5
-  0%, #23d5ab
-  100%);
-     color:#fff;
-     border:1px solid #fff;
- }
- .verify-btn{
-    border-radius: 5px !important;
-    margin:10px;
-    background: linear-gradient(to left, #23a6d5
-  0%, #23d5ab
-  100%);
-    color:#fff;
-    border:1px solid #fff; 
- }
- .send-otp-btn{
+  }
+  input[type=text] {
+    font-size: 15px;
+    margin: 0 5px;
+    margin-top: 18px !important;
+    width: 90%;
+    box-sizing: border-box;
+    border: none;
+    background-color: #fff;
+    border-bottom: 2px solid #23d5ab;;
+  }
+  input:focus {
+    outline: none !important;
+    // border:1px solid #23d5ab !important;
+    // box-shadow: 0 0 2px #23d5ab;
+    border-bottom: 2px solid blue;;
+  }
+  .update-btn{
     border-radius: 5px !important;
     background: linear-gradient(to left, #23a6d5
     0%, #23d5ab
-    100%);
+    100%) !important;
     color:#fff;
+    height:25px;
+    width:55%;
+    text-align: center;
     border:1px solid #fff;
-    margin-bottom: 2px !important;
- }
+    font-size: 12px !important;
+    padding: 3px;
+    margin:5px !important;
+    margin-left: 35px !important ;
+}
+.skip-btn{
+  border-radius: 5px !important;
+  background-color: #fff;
+  color:#23d5ab;
+  height:25px;
+  width:25%;
+  text-align: center;
+  border:1px solid #fff;
+  font-size: 13px !important;
+  padding: 3px;
+  margin:5px !important;
+}
+lottie-player{
+    cursor: pointer;
+}
 
- .tearmsAndCondition{
-     font-size:10px;
- }
- ion-label{
-     font-size:15px  !important;
-     color:#4c4c4d !important;
- }
-
- .condition{
-     font-size: 12px;
-     color:gray;
-     padding: 15px;
- }
- .container{
-     margin-top:95px;
- }
- ion-item{
-     border-bottom: 1px solid #fff !important;
-    --highlight-background: #23d5ab !important;
- }
- ion-content {
-     background-color:#fff !important;
-     // background: linear-gradient(to bottom, darkturquoise
-     // 0%, #d1f2e7
-     // 100%) !important;
+select{
+  border: 1px solid #fff;
  
-     --offset-bottom: auto!important;
-     --overflow: hidden;
-     overflow: auto;
-     &::-webkit-scrollbar {
-         display: none;
-     }
-   }
+}
+.row{
+    margin-bottom: 10px !important;
+}
+
+
+ion-content {
+  --background:#F4F7FA  !important;
+  overflow: auto;
+  &::-webkit-scrollbar {
+      display: none;
+  }
+}
+
+
+
+modal-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  @media not all and (min-height: 600px) and (min-width: 768px) {
+    ion-modal ion-backdrop {
+      visibility: hidden;
+    }
+  }
+  
+  @media only screen and (min-height: 0px) and (min-width: 0px) {
+    .modal-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
