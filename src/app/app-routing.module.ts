@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./setalarm/setalarm.module').then( m => m.SetalarmPageModule)
   },
   {
-    path: '',
+    path: 'f',
     loadChildren: () => import('./splashscreen/splashscreen.module').then( m => m.SplashscreenPageModule)
   },
   {
@@ -72,7 +72,7 @@ const routes: Routes = [
     loadChildren: () => import('./slide-test/slide-test.module').then( m => m.SlideTestPageModule)
   },
   {
-    path: 'local',
+    path: '',
     loadChildren: () => import('./local/local.module').then( m => m.LocalPageModule)
   },
  
