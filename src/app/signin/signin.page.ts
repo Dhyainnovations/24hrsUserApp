@@ -239,5 +239,9 @@ export class SigninPage implements OnInit {
     this.router.navigate(['/homepage'])
   }
 
+  navigateToLocal(){
+    alert("i")
+    this.router.navigate(['/local'])
+  }
 
 }
