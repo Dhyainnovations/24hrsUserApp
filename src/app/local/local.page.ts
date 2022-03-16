@@ -39,13 +39,13 @@ export class LocalPage implements OnInit {
     });
  
     // Works as well!
-    // this.localNotifications.schedule({
-    //   id: 1,
-    //   title: 'Attention',
-    //   text: 'Simons Notification',
-    //   data: { mydata: 'My hidden message this is' },
-    //   trigger: { at: new Date(new Date().getTime() + 5 * 1000) }
-    // });
+    this.localNotifications.schedule({
+      id: 1,
+      title: 'Attention',
+      text: 'Simons Notification',
+      data: { mydata: 'My hidden message this is' },
+      trigger: { at: new Date(new Date().getTime() + 5 * 1000) }
+    });
   }
  
   recurringNotification() {
