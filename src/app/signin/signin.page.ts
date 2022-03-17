@@ -240,8 +240,7 @@ export class SigninPage implements OnInit {
   }
 
   navigateToLocal(){
-    alert("i")
-    this.router.navigate(['/local'])
+    this.router.navigate(['/home'])
   }
 
 }

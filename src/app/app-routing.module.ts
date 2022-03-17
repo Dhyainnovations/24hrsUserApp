@@ -71,9 +71,10 @@ const routes: Routes = [
     path: 'slide-test',
     loadChildren: () => import('./slide-test/slide-test.module').then( m => m.SlideTestPageModule)
   },
+  
   {
-    path: 'local',
-    loadChildren: () => import('./local/local.module').then( m => m.LocalPageModule)
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
 
  
