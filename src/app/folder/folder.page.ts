@@ -43,13 +43,15 @@ export class FolderPage implements OnInit, OnDestroy {
 
   constructor(private theme: ThemeService, private router: Router, private activatedRoute: ActivatedRoute, private http: HttpService, route: ActivatedRoute, public popoverController: PopoverController) {
     route.params.subscribe(val => {
-      this.getSelectCategory()
+      
       this.offerList()
       this.locationList()
+      // this.expiryOfferList()
     });
   }
 
   ngOnInit() {
+    this.getSelectCategory()
     this.offerList()
     this.start()
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
@@ -83,7 +85,7 @@ export class FolderPage implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
+  // userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
   slideName: any = 'Home';
   isvisible: any = false;
   deliveryAvilability: any;
@@ -91,6 +93,7 @@ export class FolderPage implements OnInit, OnDestroy {
   productDetails: any = true;
   storedetailsVisible: any = false;
   noDataFound: any = false;
+  ExpirynoDataFound:any = true;
   offerListVisible: any = true;
   getCategoryList: any = [];
   offerlist: any = [];
@@ -339,6 +342,26 @@ export class FolderPage implements OnInit, OnDestroy {
     }
     );
   }
+  expiryofferlist:any = []
+   //------------- get offer list -----------//
+   expiryOfferList() {
+   
+
+    this.http.get('/list_all_offer', ).subscribe((response: any) => {
+      this.expiryofferlist = response.records;
+      console.log(this.offerlist);
+      // if(response.message == "No offers found."){
+      //   this.noDataFound = true;
+      // }else{
+      //   this.noDataFound = false;
+      // }
+
+    }, (error: any) => {
+      console.log(error);
+      // this.noDataFound = true;
+    }
+    );
+  }
 
   //------------- click home slider ----------//
   clickSlideHome() {
@@ -396,8 +419,29 @@ export class FolderPage implements OnInit, OnDestroy {
     }, (error: any) => {
       console.log(error);
     });
+    
   }
 
+  changeLocation(){
+    console.log(this.city);
+    
+    if(this.city == "All"){
+      this.http.get('/list_all_offer', ).subscribe((response: any) => {
+        this.offerlist = response.records;
+        console.log(this.offerlist);
+        if(response.message == "No offers found."){
+          this.noDataFound = true;
+        }else{
+          this.noDataFound = false;
+        }
+  
+      }, (error: any) => {
+        console.log(error);
+        this.noDataFound = true;
+      }
+      );
+    }
+  }
 
   locationChange(){
    this.locationChangeVisible = !this.locationChangeVisible;

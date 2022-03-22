@@ -38,7 +38,7 @@ export class HttpService {
 
 
     const url = environment.baseUrl + serviceName;
-    if (serviceName == '/user_send_otp' || serviceName == '/user_verify_otp') {
+    if (serviceName == '/user_get_otp' || serviceName == '/user_verify_otp' || serviceName == '/user_register' || serviceName == '/user_login') {
       const headers = new HttpHeaders()
       const options = { headers: headers, withCredentials: false };
       return this.http.post(url, JSON.stringify(data), { headers: headers });

@@ -12,6 +12,14 @@
       "SplashShowOnlyFirstTime": "false",
       "SplashScreen": "screen",
       "SplashScreenDelay": "3000"
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "429707768959-dtsdjegmqfpgt0fhfosoq8at5ielt33a.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   }
 }

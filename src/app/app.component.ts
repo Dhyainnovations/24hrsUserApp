@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+// import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -8,6 +10,9 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+
+  notificationsDelayInSeconds: string = "2";
+
   public appPages = [
     { title: 'Home', url: '/homepage',icon: 'assets/icon/home.PNG'},
     { title: 'Set Alarm', url: '/setalarm', icon:'assets/icon/setalarm.png' },
@@ -18,12 +23,35 @@ export class AppComponent {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
  
-  constructor( private router: Router) { }
+  constructor( private router: Router,private route: ActivatedRoute,) {
+    route.params.subscribe(val => {
+      
+   
+    
+    });
+   }
 
   logout() {
-    localStorage.removeItem("24hrs-user-data")
-    localStorage.removeItem("token")
+    
+    localStorage.clear()
     this.router.navigate(['/signinpage'])
   }
+
+  // ScheduleNotification() {
+  //   var options: LocalNotificationSchema = {
+  //     id: 123,
+  //     title: "title",
+  //     body: "Body",
+  //     summaryText: "summaryText",
+  //     largeBody: "largeBody",
+  //     schedule: { at: new Date(new Date().getTime() + parseInt(this.notificationsDelayInSeconds) * 1000) },
+  //     extra: "extra"
+  //   }
+  //   LocalNotifications.schedule({ notifications: [options] }).then(() => {
+  //     alert("Notification" + options.schedule);
+  //     alert("Notification" + options);
+  //   })
+  // }
+
 
 }

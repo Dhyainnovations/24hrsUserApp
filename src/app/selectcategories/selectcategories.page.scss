@@ -59,13 +59,16 @@
   }
 
   ion-content {
-    --background: #F4F7FA !important;
+    background-color:#fff !important;
+    // background: linear-gradient(to bottom, darkturquoise
+    // 0%, #d1f2e7
+    // 100%) !important;
+    --offset-bottom: auto!important;
     --overflow: hidden;
     overflow: auto;
     &::-webkit-scrollbar {
         display: none;
     }
   }
-
 
   

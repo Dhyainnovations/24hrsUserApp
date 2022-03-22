@@ -126,6 +126,7 @@ export class SupportPage implements OnInit {
     this.router.navigate(['/faq'])
   }
 
+  
 }
 
 

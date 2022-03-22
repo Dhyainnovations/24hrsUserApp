@@ -47,23 +47,24 @@ export class MyprofilePage implements OnInit {
     private toastCtrl: ToastController, route: ActivatedRoute, public alertController: AlertController) {
     route.params.subscribe(val => {
       this.PopupModel = false;
-      this.updateProfile()
       this.getSelectCategory()
-
+      this.locationList()
     });
   }
 
   ngOnInit() {
-    this.getSelectCategory()
+   
 
   }
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
+  city: any = ((localStorage.getItem("location")));
+  mobileNumber:any = ((localStorage.getItem("mobilenumber")));
+  locationsList: any = []
   PopupModel: any = false;
   password: any = ''
-  updateUsername: any = this.userdetails.username;
+  updateUsername: any ;
   updateMobile: any = this.userdetails.mobile;
-  updateEmail: any = this.userdetails.email;
   getCategoryList: any = [];
 
   //-------------- Navigate to supportPage ----------//
@@ -89,13 +90,17 @@ export class MyprofilePage implements OnInit {
     const updateData = {
       tbid: this.userdetails.id,
       user_name: this.updateUsername,
-      email_id: this.updateEmail,
-      mobile_number: this.updateMobile
+      mobile_number: this.updateMobile,
+      location:this.city
+      
     }
-    this.http.get('/user_update_profile',).subscribe((response: any) => {
+
+    console.log(updateData);
+    
+    this.http.post('/user_update_profile',updateData).subscribe((response: any) => {
       console.log(response);
       if (response.success == "true") {
-
+        this.updateUsername = response.user_name
         this.PopupModel = false;
 
       } else {
@@ -240,4 +245,20 @@ export class MyprofilePage implements OnInit {
     });
   }
 
+
+  
+  
+  locationList() {
+
+    this.http.get('/list_location',).subscribe((response: any) => {
+      console.log(response);
+      this.locationsList = response.records
+      console.log(response.records.city);
+
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+ 
 }

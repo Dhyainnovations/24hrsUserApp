@@ -16,6 +16,7 @@ export class SelectcategoriesPage implements OnInit {
       route.params.subscribe(val => {
         this.getCategory()
         this.selectedCategories()
+        this.test()
         console.log(this.alredySelectedCategoryList);
       });
      }
@@ -23,6 +24,7 @@ export class SelectcategoriesPage implements OnInit {
 
   ngOnInit() {
   }
+
 
   userdetails: any = JSON.parse(atob(localStorage.getItem("24hrs-user-data")));
 
@@ -65,7 +67,7 @@ export class SelectcategoriesPage implements OnInit {
       console.log(error);
     });
 
-    this.router.navigate(['/myprofile'])
+    this.router.navigate(['/homepage'])
   }
 
   getCategory() {
@@ -85,6 +87,25 @@ export class SelectcategoriesPage implements OnInit {
     }, (error: any) => {
       console.log(error);
     });
+  }
+
+  filterCat=[]
+
+  test(){
+    console.log(this.getCategoryList.length);
+    console.log(this.alredySelectedCategoryList.length);
+    
+    
+    for(var i=0; i= this.getCategoryList.length; i++){
+      console.log("test");
+      if(this.getCategoryList.tbid == this.alredySelectedCategoryList.tbid){
+        this.filterCat.push(this.getCategoryList)
+        console.log("hai");
+        
+      }
+      console.log(this.filterCat);
+      
+    }
   }
 }
 

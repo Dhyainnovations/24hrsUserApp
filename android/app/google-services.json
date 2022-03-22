@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "336641890643",
+    "project_id": "hrssignin",
+    "storage_bucket": "hrssignin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336641890643:android:625903e91abb1e07d5a9a6",
+        "android_client_info": {
+          "package_name": "com.hrsuser.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "429707768959-dtsdjegmqfpgt0fhfosoq8at5ielt33a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hrsuser.app",
+            "certificate_hash": "b985d6697f210e8e5ccd524987bfd9e26a2b0f2b"
+          }
+        },
+        {
+          "client_id": "429707768959-dtsdjegmqfpgt0fhfosoq8at5ielt33a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg4AIfNH70RgeNUDDW6d78jzCPo-w4ejU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "429707768959-dtsdjegmqfpgt0fhfosoq8at5ielt33a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "429707768959-dtsdjegmqfpgt0fhfosoq8at5ielt33a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sellermobo.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,3 @@
-
-
 <ion-content class="mt-2">
   <div class="myproduct-div mt-5 ">
     <div class="row">
@@ -16,7 +14,7 @@
     </div>
     <p class="get-started mt-2 mx-3"><b>Getting Started</b></p>
 
-  
+
 
 
 
@@ -37,43 +35,40 @@
       </div>
       <div class="col-8">
         <input disabled type="text" id="edit-field" placeholder="Mobile number" [(ngModel)]="mobileNumber">
-        <p class="small text-danger" *ngIf="youtubeurlCheck"><i>Kindly Enter Correct Youtube Url</i></p>
+
       </div>
     </div>
     <div class="row">
       <div class="col-4">
-        <lottie-player src="https://assets6.lottiefiles.com/datafiles/uihIaQIvWBfYL9a/data.json" background="transparent"
-          speed="1.5" style="width:100%;" autoplay></lottie-player>
+        <lottie-player src="https://assets6.lottiefiles.com/datafiles/uihIaQIvWBfYL9a/data.json"
+          background="transparent" speed="1.5" style="width:100%;" autoplay></lottie-player>
       </div>
       <div class="col-8">
-        <div class="select">
-          <select ngModel name="subcategory">
-            <option value="" disabled selected>Location</option>
-            <option *ngFor="let subcat of subcategoryList" value="{{subcat.tbid}}">
-              {{subcat.subsubcategory}}
-            </option>
-            <option disabled *ngIf="subCategoryNotfound">No Sub Category Found</option>
-            <option value="1">Coimbatore</option>
-            <option value="1">Chennai</option>
-            <option value="1">Madhurai</option>
-            <option value="1">Salem</option>
-          
-          </select>
-        </div> 
+        <ion-item>
+          <svg style="margin: 5px;" (click)="locationChange()" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+            fill="#23d5ab" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+          <ion-label style="font-size:13px !important;color: #121212;">{{city}}</ion-label>
+          <ion-select (ionChange)="changeLocation()" style="font-size: 10px;" [(ngModel)]="city" interface="popover">
+            <ion-select-option *ngFor="let location of locationsList" [value]="location.city">{{location.city}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
     </div>
-    
-   
+
+
     <div class="row ">
       <div class="col-7">
         <button (click)="navigateHome()" type="button" class="btn btn-success btn-sm skip-btn">Skip</button>
       </div>
       <div class="col-5">
-        <button (click)="sellerContact()" type="button" class="btn btn-success btn-sm update-btn">Next</button>
+        <button (click)="userDetailsUpload()" type="button" class="btn btn-success btn-sm update-btn">Next</button>
       </div>
     </div>
   </div>
 
 
-  
+
 </ion-content>

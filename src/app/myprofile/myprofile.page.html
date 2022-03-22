@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [ngStyle]="{'opacity':PopupModel ? '0.52' : '1' }">
   <div class="top-container">
     <div class="row">
 
@@ -25,8 +25,7 @@
     <div class="row">
       <div class="col-9 mt-1 mx-3">
         <p style="color: #fff;font-size: 30px;">{{updateUsername}}</p>
-        <p style="color: #fff;font-size: 15px;margin-top: -15px">{{updateMobile}}</p>
-        <p style="color: #fff;font-size: 12px;margin-top: -15px;">{{updateEmail}}
+        <p style="color: #fff;font-size: 15px;margin-top: -15px;">{{updateMobile}}
           <svg (click)="popupModelOpen()" style="margin: 5px;" xmlns="http://www.w3.org/2000/svg" width="22" height="18"
             fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
             <path
@@ -71,6 +70,9 @@
     <button (click)="deleteAccount()" class="btn btn-sm delete-acc-btn ">Delete My Account</button>
   </div>
 
+
+</ion-content>
+
   <!------------ update profile PopUp ----------------->
   <div class="card" *ngIf="PopupModel" style="margin-top: 20px;" id="card">
     <div class="row" id="modal">
@@ -83,30 +85,42 @@
           </svg>
         </div>
         <h5 style="margin:10px; color: #5C5C5C;"> <b>Edit Here:</b></h5>
-        <div class="row" style="padding-left: 10px;">
-
-          <div class="col-6">
-            <p class="edit-name">Username :</p>
+        <div class="row ion-text-center mb-2">
+          <div class="col-4">
+            <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ultyaniw.json" background="transparent"
+              speed="1.5" style="width:55%;margin-left: 15px;" autoplay></lottie-player>
           </div>
-          <div class="col-6">
-            <input [(ngModel)]="updateUsername" type="text">
+          <div class="col-8" >
+            <input style="width: 90%;" type="text" id="edit-field" placeholder="Username" [(ngModel)]="updateUsername" maxlength="10">
           </div>
-          <div class="col-6">
-            <p class="edit-name">Mobile number :</p>
+        </div>
+    
+        <div class="row mb-2">
+          <div class="col-4">
+            <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_uz8b4wzt.json" background="transparent"
+              speed="1.5" style="width:75%;margin-left: 10px;" autoplay></lottie-player>
           </div>
-          <div class="col-6">
-            <input [(ngModel)]="updateMobile" type="text" id="edit-field">
+          <div class="col-8" style="padding-left: 11%;">
+            <input disabled type="text" id="edit-field" placeholder="Mobile number" [(ngModel)]="mobileNumber">
+    
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-4">
+            <lottie-player src="https://assets6.lottiefiles.com/datafiles/uihIaQIvWBfYL9a/data.json"
+              background="transparent" speed="1.5" style="width:100%;" autoplay></lottie-player>
+          </div>
+          <div class="col-8">
+            <ion-item>
+              <ion-label style="font-size:15px !important;color: #121212;margin-left: 0px;">{{city}}</ion-label>
+              <ion-select style="font-size: 0px;" [(ngModel)]="city" interface="popover">
+                <ion-select-option *ngFor="let location of locationsList" [value]="location.city">{{location.city}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
           </div>
         </div>
 
-        <div class="row" style="padding-left: 10px;">
-          <div class="col-6">
-            <p class="edit-name">Email:</p>
-          </div>
-          <div class="col-6">
-            <input [(ngModel)]="updateEmail" type="text" id="edit-field">
-          </div>
-        </div>
         <div style="width: 100%; text-align: center;">
           <button type="button" (click)="updateProfile()" class="btn btn-success btn-sm update-btn">Update</button>
         </div>
@@ -115,5 +129,3 @@
 
   </div>
 
-
-</ion-content>

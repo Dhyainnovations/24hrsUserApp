@@ -13,7 +13,7 @@ import {
   style,
   animate,
   transition
-} from '@angular/animations'; 
+} from '@angular/animations';
 import { ModalPage } from '../modal/modal.page';
 
 @Component({
@@ -31,13 +31,13 @@ import { ModalPage } from '../modal/modal.page';
     trigger('slidelefttitle', [
       transition('void => *', [
         style({ opacity: 0, transform: 'translateX(150%)' }),
-        animate('600ms 300ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 }, ))
+        animate('600ms 300ms ease-out', style({ transform: 'translateX(0%)', opacity: 1 },))
       ])
     ]),
     trigger('slideup', [
       transition('void => *', [
         style({ opacity: 0, transform: 'translateY(150%)' }),
-        animate('900ms 300ms ease-out', style({ transform: 'translateY(0%)', opacity: 1 }, ))
+        animate('900ms 300ms ease-out', style({ transform: 'translateY(0%)', opacity: 1 },))
       ])
     ])
   ]
@@ -46,27 +46,68 @@ export class SignupPage implements OnInit {
   modalCtrl: any;
 
   constructor(private router: Router, private http: HttpService,
-    private toastCtrl: ToastController, public popoverController: PopoverController,  private route: ActivatedRoute) {
-
-
+    private toastCtrl: ToastController, public popoverController: PopoverController, private route: ActivatedRoute) {
 
     this.route.queryParams.subscribe(queryParams => {
-    
-   });
+      this.locationList()
+    });
   }
 
 
   ngOnInit() {
-
+    this.locationList()
   }
 
 
-  locationn: any = "coimbate";
+  userTbid: any = ((localStorage.getItem("loginstatus")));
+  mobilenumber: any = ((localStorage.getItem("mobilenumber")));
+
+  location: any;
   userName: any = "";
   mobileNumber: any = 8838373520;
-  
 
-  
+
+  locationsList: any = []
+  locationList() {
+
+    this.http.get('/list_location',).subscribe((response: any) => {
+      console.log(response);
+      this.locationsList = response.records
+      console.log(response.records.city);
+
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+
+
+  userDetailsUpload() {
+    const data = {
+      "tbid": this.userTbid,
+      "user_name": this.userName,
+      "mobile_number": this.mobilenumber,
+      "location": this.location
+
+    }
+    console.log(data);
+
+    this.http.post('/user_update_profile', data).subscribe((response: any) => {
+      console.log(response);
+      if (response.success == "true") {
+        localStorage.setItem("userName", this.userName)
+        localStorage.setItem("location", this.location)
+        this.router.navigate(['/selectcategories'])
+      }
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+  navigateHome() {
+    this.router.navigate(['/selectcategories'])
+  }
+
 
 
 }

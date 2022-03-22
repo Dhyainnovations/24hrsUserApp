@@ -57,7 +57,7 @@
     <div *ngFor="let alarm of storeAlarmList" class=" card mt-4">
       <div class="row">
         <div class="col-10">
-          <img style="margin: 7px;" height="30px" width="30px" src="assets/onion.PNG" alt="">
+          <img style="margin: 7px;" height="30px" width="30px"  src="{{alarm.store_logo}}" alt="">
           <span>{{alarm.store_name}}</span>
         </div>
         <div class="col-2 mt-2">
@@ -81,7 +81,7 @@
     <div *ngFor="let alarm of productAlarmList" class=" card mt-4">
       <div class="row">
         <div class="col-10">
-          <img style="margin: 7px;" height="30px" width="30px" src="assets/onion.PNG" alt="">
+          <img style="margin: 7px;" height="30px" width="30px" src="{{alarm.store_logo}}" alt="">
           <span style="font-size: 14px;">{{alarm.store_name}}/</span> <span style="font-size: 12px;">
             {{alarm.product}}</span>
         </div>
@@ -100,4 +100,10 @@
     </div>
   </div>
 
+  <!-------------  No data found Gif ------------------->
+  <div *ngIf="noDataFound">
+    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_qlwqp9xi.json" background="transparent"
+      speed="1.5" style="width:100%;margin:3%; margin-top: 15%;" loop autoplay></lottie-player>
+  </div>
+  
 </ion-content>

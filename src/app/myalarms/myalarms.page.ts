@@ -52,6 +52,8 @@ export class MyalarmsPage implements OnInit {
       this.getStoreAlarmList()
       this.getproductAlarmList()
 
+      
+
     });
   }
 
@@ -63,7 +65,7 @@ export class MyalarmsPage implements OnInit {
   productAlarmList: any = []
   tbid: any;
   storeAlram: any = false;
-
+  noDataFound:any = true;
   //-------------- Navigate to searchpage ----------//
   searchPage() {
     this.router.navigate(['/searchpage'])
@@ -150,6 +152,9 @@ export class MyalarmsPage implements OnInit {
                     icon: 'success',
                     title: 'Alarm Deleted successfully'
                   })
+                  
+                  
+                  this.storeAlarmList = []
                   this.getStoreAlarmList()
                 }
 
@@ -192,6 +197,8 @@ export class MyalarmsPage implements OnInit {
                     icon: 'success',
                     title: 'Alarm Deleted successfully'
                   })
+                  
+                  this.productAlarmList = []
                   this.getproductAlarmList()
                 }
 
@@ -227,8 +234,10 @@ export class MyalarmsPage implements OnInit {
 
   //------------- Get StoreAlarmList -----------//
   getStoreAlarmList() {
+    
     this.http.get('/store_read_alarm').subscribe((response: any) => {
       this.storeAlarmList = response.records
+      this.noDataFound = false
       console.log(response);
 
     }, (error: any) => {
@@ -241,6 +250,7 @@ export class MyalarmsPage implements OnInit {
     this.http.get('/product_read_alarm').subscribe((response: any) => {
       this.productAlarmList = response.records
       console.log(response);
+      this.noDataFound = false;
 
     }, (error: any) => {
       console.log(error);

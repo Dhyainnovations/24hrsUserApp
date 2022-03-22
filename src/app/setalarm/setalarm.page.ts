@@ -350,7 +350,6 @@ export class SetalarmPage implements OnInit {
     this.isVisibleForProduct = true;
     this.isVisible = false;
 
-
   }
 
   backToHome() {
